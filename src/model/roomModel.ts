@@ -1,16 +1,34 @@
+import { actionType, anyObjectType, roomDataType } from "../interfaces/general_interface";
 import roomService from "../services/roomService"
 
-const updateUserInRoom = async (room_id:string,action:string,user_id:string):Promise<void> =>{
+const updateUserInRoom = async (room_id:string,action:actionType,user_id:string):Promise<anyObjectType> =>{
     try {
-        const {user_ids} = await roomService.getCurrentUserInRoom(room_id)
-        let new_users_lists = user_ids;
-        action == 'join' ?  user_ids.push(user_id) : new_users_lists = user_ids.filter((users:any) => !new_users_lists.includes(users))
-        await roomService.updateUserInRoom(room_id,new_users_lists)
+        const {data} = await roomService.getCurrentUserInRoom(room_id)
+        let new_users_lists = data.user_ids;
+        action == 'join' ?  new_users_lists.push(user_id) : new_users_lists.filter((users:any) => !new_users_lists.includes(users))
+        return await roomService.updateUserInRoom(room_id,new_users_lists)
     } catch (e) {
         throw new Error(e)
     }
 }
 
+const getRoomLists = async (user_id:string,client_id:string):Promise<anyObjectType> => {
+    try {
+        return await roomService.getRoomLists(user_id,client_id)
+    } catch (e) {
+        throw new Error(e)
+    }
+}
+
+const createRoom = async (client_id:string,data:roomDataType) => {
+    try {
+        return await roomService.createRoom(client_id,data)
+    } catch (e) {
+        throw new Error(e)
+    }
+}
 export default {
-    updateUserInRoom
+    updateUserInRoom,
+    getRoomLists,
+    createRoom
 }

@@ -56,30 +56,52 @@ const triggerUpdate = (table: string): any => {
 
 const clients = createQuery({
     table_name:"clients",
-    columns: ["data jsonb"],
+    columns: ["data JSONB"],
     references: []
 })
 const room = createQuery({
     table_name: "room",
-    columns: ["user_ids uuid[]","type TEXT","name TEXT","is_deleted BOOLEAN"],
+    columns: ["data JSONB","is_deleted BOOLEAN"],
     references: ["client_id UUID REFERENCES clients"]
 })
 const activity_log = createQuery({
     table_name:"activity_log",
-    columns: ["user_id uuid"],
-    references:["clients_id"]
+    columns: ["user_id TEXT"],
+    references:["clients_id UUID REFERENCES clients"]
+})
+const messages = createQuery({
+    table_name:"messages",
+    columns:["path TEXT","text TEXT","sent_by UUID","is_deleted BOOLEAN"],
+    references:["room_id UUID REFERENCES room"]
+})
+const room_latest_msg = createQuery({
+    table_name: "room_latest_msg",
+    columns: ["user_id TEXT"],
+    references: ["room_id UUID REFERENCES room","message_id UUID REFERENCES messages"]
+
 })
 const allQueries = [
     init,
     functionIntervalWithoutDays,
     updatedAtAutomatically,
+    clients,
+    triggerUpdate("clients"),
+    room,
+    triggerUpdate("room"),
+    messages,
+    triggerUpdate("messages"),
+    activity_log,
+    triggerUpdate("activity_log"),
+    room_latest_msg,
+    triggerUpdate("room_latest_msg")
+
 ]
 export const chatMigration = async (): Promise<void> => {
 	try {
 		console.log("db chat migration run");
 		await db.query("SET SEARCH_PATH TO public", []);
 		await db.transaction(allQueries);
-		console.log("db public migration done");
+		console.log("db chat migration done");
 	} catch (e) {
 		errorHandler(e);
 	}

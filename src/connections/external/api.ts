@@ -42,10 +42,10 @@ export const api = async ({
 		data,
 		params,
 	})
-		.then((res) => {
+		.then((res:any) => {
 			result_data = res.data;
 		})
-		.catch((err) => {
+		.catch((err:any) => {
 			console.log(err.message);
 			throw `request ${request_name} error ${err.code}`;
 		});

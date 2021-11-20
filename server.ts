@@ -10,6 +10,7 @@ import authMiddleware from "./src/middleware/authMiddleware";
 import appsVersionController from "./src/controllers/appsVersionController";
 
 import { SocketInit } from "./src/connections/socket";
+import { migrateServices } from "./src/migrator";
 
 dotEnv();
 const port = process.env.PORT || 9000;
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 //get request parameter from body post
 app.use(express.json());
 //get request parameter from multipart/form-data
+app.use("/migrate",migrateServices)
 
 app.use("/api", authMiddleware, api);
 
@@ -62,3 +64,8 @@ export const rootPath = __dirname;
 // });
 
 console.log(`server run on ${process.env.NODE_ENV} mode on port ${port}`);
+
+/**
+ below function only need to be activated once for migrating into database
+*/
+// (async () => await migrateServices())()
