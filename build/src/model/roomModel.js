@@ -15,15 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const roomService_1 = __importDefault(require("../services/roomService"));
 const updateUserInRoom = (room_id, action, user_id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { user_ids } = yield roomService_1.default.getCurrentUserInRoom(room_id);
-        let new_users_lists = user_ids;
-        action == 'join' ? user_ids.push(user_id) : new_users_lists = user_ids.filter((users) => !new_users_lists.includes(users));
-        yield roomService_1.default.updateUserInRoom(room_id, new_users_lists);
+        const { data } = yield roomService_1.default.getCurrentUserInRoom(room_id);
+        let new_users_lists = data.user_ids;
+        action == 'join' ? new_users_lists.push(user_id) : new_users_lists.filter((users) => !new_users_lists.includes(users));
+        return yield roomService_1.default.updateUserInRoom(room_id, new_users_lists);
+    }
+    catch (e) {
+        throw new Error(e);
+    }
+});
+const getRoomLists = (user_id, client_id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield roomService_1.default.getRoomLists(user_id, client_id);
+    }
+    catch (e) {
+        throw new Error(e);
+    }
+});
+const createRoom = (client_id, data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield roomService_1.default.createRoom(client_id, data);
     }
     catch (e) {
         throw new Error(e);
     }
 });
 exports.default = {
-    updateUserInRoom
+    updateUserInRoom,
+    getRoomLists,
+    createRoom
 };

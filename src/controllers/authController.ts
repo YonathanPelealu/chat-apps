@@ -3,7 +3,6 @@ import constant from "../constants/general";
 import validator from "validator";
 
 import * as authMiddleware from "../middleware/authMiddleware";
-
 import { initFunc } from "./v1_0/interface";
 
 const login: initFunc = async (req, res) => {

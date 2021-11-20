@@ -4,5 +4,9 @@ export const chatPath = {
 }
 export const roomPath = {
     createRoom: "/room/create",
-    getRoomLists: "/room/lists"
+    getRoomLists: "/room/lists",
+    updateUser: "/room/update-user"
+}
+export const clientPath = {
+    register: "/client/register"
 }
