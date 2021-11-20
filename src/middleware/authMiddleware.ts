@@ -1,5 +1,3 @@
-import { accessListsType } from "../interfaces/access_lists_interfaces";
-// import { tokenPayloadType } from "../../interfaces/general_interface";
 import { errorHandler } from "./../handler/errorHandler";
 import { anyObjectType } from "../interfaces/general_interface";
 import { api } from "../connections/external/api";
@@ -9,11 +7,6 @@ const oauth_url = `http://127.0.0.1:${process.env.PORT_OAUTH}/oauth`;
 
 type PayloadType = {
 	user_id: string;
-	user_name: string;
-	role_id: string;
-	department_ids: string[];
-	company_id: string;
-	access_lists: accessListsType;
 };
 
 interface token_obj {

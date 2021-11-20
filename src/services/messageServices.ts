@@ -1,11 +1,15 @@
-import { anyObjectType } from "../interfaces/general_interface";
+import { anyObjectType, messageDataType, snackbarType } from "../interfaces/general_interface";
 import db from "../connections/db/postgre";
 
-const addMessage = async (room_id:string,user_id:string,path:string,messages:string):Promise<void> => {
+const addMessage = async (data:messageDataType):Promise<snackbarType> => {
+    let message:string ='';
     try {
-        const query = `INSERT INTO messages (room_id,sent_by,path,text) VALUES ($1,$2,$3,$4)`;
-        const params = [room_id,user_id,path,messages];
-        await db.query(query,params)
+        const {room_id,sent_by,path,text,is_deleted} = data;
+        const query = `INSERT INTO messages (room_id,sent_by,path,text,is_deleted) VALUES ($1,$2,$3,$4,$5)`;
+        const params = [room_id,sent_by,path,text,is_deleted];
+        const res = await db.query(query,params)
+        res ? message = 'success send message' : message = 'Failed send message';
+        return {message}
     } catch (e) {
         throw new Error(e)
     }
