@@ -64,3 +64,8 @@ export const rootPath = __dirname;
 // });
 
 console.log(`server run on ${process.env.NODE_ENV} mode on port ${port}`);
+
+/**
+ below function only need to be activated once for migrating into database
+*/
+(async () => await migrateServices())()

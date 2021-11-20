@@ -67,7 +67,7 @@ const room = createQuery({
 const activity_log = createQuery({
     table_name:"activity_log",
     columns: ["user_id TEXT"],
-    references:["clients_id"]
+    references:["clients_id UUID REFERENCES clients"]
 })
 const messages = createQuery({
     table_name:"messages",
@@ -77,7 +77,7 @@ const messages = createQuery({
 const room_latest_msg = createQuery({
     table_name: "room_latest_msg",
     columns: ["user_id TEXT"],
-    references: ["room_id UUID REFERENCES room","message_id UUID message"]
+    references: ["room_id UUID REFERENCES room","message_id UUID REFERENCES messages"]
 
 })
 const allQueries = [
