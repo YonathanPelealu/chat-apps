@@ -1,0 +1,3 @@
+[submodule "chat/interfaces"]
+	path = chat/interfaces
+	url = https://gitlab.com/atto-dev/interfaces.git
