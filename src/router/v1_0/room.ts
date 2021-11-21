@@ -7,7 +7,7 @@ const room = express.Router()
 const { roomPath } = url_path;
 const {roomController} = controller;
 
-room.post(roomPath.updateUser,roomController.updateUserInRoom);
+room.put(roomPath.updateUser,roomController.updateUserInRoom);
 room.post(roomPath.createRoom,roomController.createRoom);
 room.get(roomPath.getRoomLists,roomController.getRoomLists);
 

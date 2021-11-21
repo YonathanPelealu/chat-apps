@@ -7,6 +7,3 @@ export const roomPath = {
     getRoomLists: "/room/lists",
     updateUser: "/room/update-user"
 }
-export const clientPath = {
-    register: "/client"
-}
