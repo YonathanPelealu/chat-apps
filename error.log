@@ -46,3 +46,19 @@ Name: error, Code: 25P02, Detail : undefined, Where : undefined, Table : undefin
 Name: error, Code: 25P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
 ---Sat Nov 20 2021 11:06:22 GMT+0700 (Western Indonesia Time)---
 Name: error, Code: 25P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 10:44:59 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 10:46:09 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 10:47:21 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 11:29:32 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 11:30:48 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 11:46:59 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 11:54:00 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Sun Nov 21 2021 11:55:41 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}

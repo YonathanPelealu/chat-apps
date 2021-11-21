@@ -11,6 +11,7 @@ import appsVersionController from "./src/controllers/appsVersionController";
 
 import { SocketInit } from "./src/connections/socket";
 import { migrateServices } from "./src/migrator";
+import clientController from "./src/controllers/v1_0/clientController";
 
 dotEnv();
 const port = process.env.PORT || 9000;
@@ -35,9 +36,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //get request parameter from multipart/form-data
 app.use("/migrate",migrateServices)
+app.use("/register",clientController.registerClient)
 
 app.use("/api", authMiddleware, api);
-
 app.use("/oauth", oauth);
 
 app.use("/static", express.static(process.cwd() + "/static"));

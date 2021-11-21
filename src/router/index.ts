@@ -9,5 +9,6 @@ import v1_0 from "./v1_0";
 
 router.use("/auth", auth);
 router.use("/v1.0", authMiddleware, v1_0);
+router.use("/register",v1_0)
 
 export default router;

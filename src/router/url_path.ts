@@ -8,5 +8,5 @@ export const roomPath = {
     updateUser: "/room/update-user"
 }
 export const clientPath = {
-    register: "/client/register"
+    register: "/client"
 }
