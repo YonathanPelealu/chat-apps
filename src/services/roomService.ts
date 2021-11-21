@@ -37,12 +37,25 @@ const getCurrentUserInRoom = async (
     }
 }
 const getRoomLists = async (
-    user_id:string,
-    client_id:string
+    client_id:string,
+    type?:string,
+    user_id?:string
 ):Promise<anyObjectType> => {
     try {
-        const query = `SELECT * FROM room WHERE room.clients_id = $1 AND user_id = any(room.data->>"user_ids")`;
-        const params = [client_id,user_id]
+        let count = 1;
+        let query = `SELECT * FROM room WHERE room.clients_id = $1 AND room.is_active = true AND room.is_deleted = false`;
+        let params = [client_id]
+
+        if (user_id) {
+            count ++
+            query += `AND $${count} = any(room.data->>"user_ids")`
+            params.push(user_id)
+        }
+        if (type) {
+            count ++
+            query += `AND room.data->>'type' = $${count}`;
+            params.push(type)
+        }
         const {rows} = await db.query(query,params)
         return rows
     } catch (e) {
@@ -64,9 +77,20 @@ const createRoom = async (
         throw new Error(e)
     }
 }
+const getRoomTypeLists = async (clients_id:string,type:string) => {
+    try {
+        const query = `SELECT * FROM room WHERE room.data->>'type' = $1 AND room.clients_id = $2`;
+        const params = [type,clients_id];
+        const {rows} = await db.query(query,params);
+        return rows;
+    } catch (e) {
+        throw new Error(e)
+    }
+}
 export default {
     updateUserInRoom,
     getCurrentUserInRoom,
     getRoomLists,
-    createRoom
+    createRoom,
+    getRoomTypeLists
 };

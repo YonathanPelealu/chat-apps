@@ -1,3 +1,4 @@
+import { anyObjectType } from "../interfaces/general_interface";
 import clientService from "../services/clientService";
 
 export type PayloadType = {
@@ -20,15 +21,20 @@ const validateClientID = async (payload:PayloadType) => {
 	}
 }
 
-const authMiddleware = async (req:any,res:any,next:any) => {
+const authMiddleware: (
+	req: anyObjectType,
+	res: anyObjectType,
+	next: () => void
+) => Promise<void>  = async (req,res,next) => {
 	const {client_id,client_key,client_secret,user_id} = req.headers
 	const payload:PayloadType = {client_id,client_key,client_secret,user_id}
 	try {
 		const validSecret = payload.client_key.length > 19 && payload.client_secret.slice(payload.client_secret.length - 3) === 'PVT';
 		const validKey = payload.client_key.length > 19 && payload.client_key.slice(payload.client_key.length - 3 ) === 'PUB';
 		if (validSecret && validKey) {
-			const result = await validateClientID(payload)
-			result.client_id ? req.client = result : res.json('invalid client_id') 
+			let result = await validateClientID(payload)
+			result.user_id = user_id;
+			result.client_id ? req.client = result : res.json('invalid client_id');
 			next()
 		} else {
 			res.json('invalid key pair')
