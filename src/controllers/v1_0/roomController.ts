@@ -32,13 +32,14 @@ const getRoomLists:initFunc = async (req,res) => {
     }
 }
 const createRoom:initFunc = async (req,res) => {
-    const {client_id} = req.query;
+    console.log(req.clients_id)
     try {
         const data:roomDataType = {...req.body}
-        const {message} = await roomService.createRoom(client_id,data)
+        return
+        // const {message} = await roomService.createRoom(client_id,data)
         res.json({
             status:constant.RESPONSE_STATUS_SUCCESS,
-            message
+            // message
         })
     } catch (e) {
         res.json({
