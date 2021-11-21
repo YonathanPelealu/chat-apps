@@ -46,15 +46,15 @@ const getRoomLists = async (
         let query = `SELECT * FROM room WHERE room.clients_id = $1 AND room.is_active = true AND room.is_deleted = false`;
         let params = [client_id]
 
-        if (user_id) {
-            count ++
-            query += `AND $${count} = any(room.data->>"user_ids")`
-            params.push(user_id)
-        }
         if (type) {
             count ++
-            query += `AND room.data->>'type' = $${count}`;
+            query += ` AND room.data->>'type' = $${count}`;
             params.push(type)
+        }
+        if (user_id) {
+            count ++
+            query += ` AND $${count} = any(room.data->>'user_ids')`
+            params.push(user_id)
         }
         const {rows} = await db.query(query,params)
         return rows
@@ -68,7 +68,7 @@ const createRoom = async (
 ):Promise<snackbarType> => {
     try {
         let message:string = "";
-            const query =`INSERT INTO room (client_id,data,is_deleted) VALUES ($1,$2,$3)`;
+            const query =`INSERT INTO room (clients_id,data,is_deleted) VALUES ($1,$2,$3)`;
             const params = [client_id,data,false]
             const result = await db.query(query,params)
             result ? message = 'success add new room' : message = 'failed add new room';
@@ -77,12 +77,12 @@ const createRoom = async (
         throw new Error(e)
     }
 }
-const getRoomTypeLists = async (clients_id:string,type:string) => {
+const getRoomTypeLists = async (clients_id:string):Promise<anyObjectType> => {
     try {
-        const query = `SELECT * FROM room WHERE room.data->>'type' = $1 AND room.clients_id = $2`;
-        const params = [type,clients_id];
+        const query = `SELECT clients.data->>'chat_type' as type FROM clients WHERE id = $1`;
+        const params = [clients_id];
         const {rows} = await db.query(query,params);
-        return rows;
+        return (rows);
     } catch (e) {
         throw new Error(e)
     }

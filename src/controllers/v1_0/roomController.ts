@@ -48,8 +48,21 @@ const createRoom:initFunc = async (req,res) => {
         })
     }
 }
+const getRoomTypeLists:initFunc = async (req,res) => {
+    const {client_id} = req.client;
+    try {
+        const result = await roomModel.getRoomTypeLists(client_id)
+        res.json(result)
+    } catch (e) {
+        res.json({
+            status:constant.RESPONSE_STATUS_FAILED,
+            message: e.toString()
+        })
+    }
+}
 export default {
     updateUserInRoom,
     getRoomLists,
-    createRoom
+    createRoom,
+    getRoomTypeLists
 }

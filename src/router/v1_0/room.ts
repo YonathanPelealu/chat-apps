@@ -10,5 +10,6 @@ const {roomController} = controller;
 room.put(roomPath.updateUser,roomController.updateUserInRoom);
 room.post(roomPath.createRoom,roomController.createRoom);
 room.get(roomPath.getRoomLists,roomController.getRoomLists);
+room.get(roomPath.getTypeLists,roomController.getRoomTypeLists)
 
 export default room;
