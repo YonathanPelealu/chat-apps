@@ -76,3 +76,17 @@ Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefin
 Name: error, Code: 42703, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
 ---Mon Nov 22 2021 02:34:10 GMT+0700 (Western Indonesia Time)---
 Name: error, Code: 42809, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 02:46:17 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42809, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 02:52:45 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 02:53:49 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 02:54:48 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42704, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 02:58:10 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : Token "user1" is invalid., Where : JSON data, line 1: user1, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 03:00:29 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 03:04:21 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42883, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
