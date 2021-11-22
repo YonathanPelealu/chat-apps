@@ -71,7 +71,7 @@ const activity_log = createQuery({
 })
 const messages = createQuery({
     table_name:"messages",
-    columns:["path TEXT","text TEXT","sent_by UUID","is_deleted BOOLEAN"],
+    columns:["path TEXT","text TEXT","sent_by TEXT","is_deleted BOOLEAN"],
     references:["room_id UUID REFERENCES room"]
 })
 const room_latest_msg = createQuery({
