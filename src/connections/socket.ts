@@ -13,9 +13,9 @@ export const socketNS: nsType = {
 
 export const SocketInit = (socketServer: Server): void => {
 	// useSocket = socketServer;
-	socketNS.kriya = socketServer.of("/KRIYA");
+	socketNS.kriya = socketServer.of("/kriya");
 
-	socketServer.on("disconnect", () => {
-		socketServer.removeAllListeners();
-	});
+	// socketServer.on("disconnect", () => {
+	// 	socketServer.removeAllListeners();
+	// });
 };

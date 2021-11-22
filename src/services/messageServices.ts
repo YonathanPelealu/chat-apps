@@ -25,6 +25,7 @@ const getMessageOnRoom = async (room_id: string): Promise<anyObjectType> => {
 		const query = `SELECT * FROM messages WHERE messages.room_id = $1 AND messages.is_active = true`;
 		const params = [room_id];
 		const { rows } = await db.query(query, params);
+
 		return rows;
 	} catch (e) {
 		throw new Error(e);

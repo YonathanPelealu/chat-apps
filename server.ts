@@ -34,8 +34,15 @@ app.use(express.urlencoded({ extended: true }));
 //get request parameter from body post
 app.use(express.json());
 //get request parameter from multipart/form-data
-app.use("/migrate",migrateServices)
-app.use("/register",clientController.registerClient)
+app.use("/migrate", async (req, res) => {
+	try {
+		await migrateServices();
+		res.json("migration done");
+	} catch (e) {
+		console.log(e);
+	}
+});
+app.use("/register", clientController.registerClient);
 
 app.use("/api", authMiddleware, api);
 
@@ -56,7 +63,6 @@ if (process.env.NODE_ENV === "development") {
 
 // get root directory
 export const rootPath = __dirname;
-
 
 console.log(`server run on ${process.env.NODE_ENV} mode on port ${port}`);
 
