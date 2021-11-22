@@ -1,129 +1,48 @@
-import { errorHandler } from "./../handler/errorHandler";
 import { anyObjectType } from "../interfaces/general_interface";
-import { api } from "../connections/external/api";
-import dotenv from "../../config";
-dotenv();
-const oauth_url = `http://127.0.0.1:${process.env.PORT_OAUTH}/oauth`;
+import clientService from "../services/clientService";
 
-type PayloadType = {
+export type PayloadType = {
+	client_id: string,
+	client_key:string,
+	client_secret:string,
 	user_id: string;
 };
 
-interface token_obj {
-	token: string;
-	issued: Date;
-	expired: string;
-	data: PayloadType;
+const validateClientID = async (payload:PayloadType) => {
+	try {
+		const result = await clientService.validateClientID(payload);
+		if (result) {
+			return result
+		} else {
+			return false
+		}
+	} catch (e) {
+		throw new Error(e)
+	}
 }
 
-export const generateToken = async (
-	phone: string,
-	password: string
-): Promise<token_obj> => {
-	try {
-		const token_object: any = await api({
-			baseURL: oauth_url,
-			api_path: "/login",
-			method: "post",
-			request_name: "login",
-			data: { phone, password },
-		});
-		if (token_object) {
-			return token_object;
-		} else {
-			throw "You use wrong phone or password";
-		}
-	} catch (e) {
-		errorHandler(e);
-		throw e;
-	}
-};
-
-export const getToken = (authorization: string): string => {
-	const token = authorization.split(" ")[1];
-	return token;
-};
-
-export const getTokenPayload = async (token: string): Promise<any> => {
-	try {
-		const payload: any = await api({
-			baseURL: oauth_url,
-			api_path: "/getTokenPayload",
-			method: "post",
-			request_name: "get token payload",
-			data: { token },
-		});
-		return payload;
-	} catch (e) {
-		errorHandler(e);
-		throw e;
-	}
-};
-
-export const getTokenPayloadFromHeaders = async (
-	headers: anyObjectType
-): Promise<any> => {
-	const { authorization } = headers;
-	const token = getToken(authorization);
-	try {
-		const payload: any = await api({
-			baseURL: oauth_url,
-			api_path: "/getTokenPayload",
-			method: "post",
-			request_name: "get token payload",
-			data: { token },
-		});
-		return payload;
-	} catch (e) {
-		errorHandler(e);
-		throw e;
-	}
-};
-
-export const isValidBearer = (authorization: string): boolean => {
-	if (authorization) {
-		const is_has_bearer_header = authorization.substring(0, 6) === "Bearer";
-		if (is_has_bearer_header) {
-			const is_has_bearer_body =
-				authorization.split(" ")[1] !== undefined ||
-				authorization.split(" ")[1] !== null ||
-				authorization.split(" ")[1] !== "";
-			if (is_has_bearer_body) {
-				const bearer_body = authorization.split(" ")[1];
-				const is_valid_bearer_body = bearer_body.length >= 500;
-				return is_valid_bearer_body;
-			}
-		}
-	}
-	return false;
-};
-
-// Auth Middleware
 const authMiddleware: (
 	req: anyObjectType,
 	res: anyObjectType,
 	next: () => void
-) => Promise<void> = async (req, res, next) => {
-	const token = getToken(req.headers.authorization);
+) => Promise<void>  = async (req,res,next) => {
+	const {client_id,client_key,client_secret,user_id} = req.headers;
+	const payload:PayloadType = {client_id,client_key,client_secret,user_id}
 	try {
-		const result: any = await api({
-			baseURL: oauth_url,
-			api_path: "/authorization",
-			method: "post",
-			request_name: "authorization token",
-			data: { token },
-		});
-		if (result?.message === "Valid Token") {
-			next();
+		const validSecret = payload.client_key.length > 19 && payload.client_secret.slice(payload.client_secret.length - 3) === 'PVT';
+		const validKey = payload.client_key.length > 19 && payload.client_key.slice(payload.client_key.length - 3 ) === 'PUB';
+		if (validSecret && validKey) {
+			let result = await validateClientID(payload)
+			result.user_id = user_id;
+			result.client_id ? req.client = result : res.json('invalid client_id');
+
+			next()
 		} else {
-			res.status(401).json({
-				message: "Invalid Token",
-			});
+			res.json('invalid key pair')
 		}
 	} catch (e) {
-		errorHandler(e);
-		res.status(401).json(e);
+		throw new Error(e)
 	}
-};
+} 
 
 export default authMiddleware;

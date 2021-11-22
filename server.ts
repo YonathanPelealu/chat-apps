@@ -4,13 +4,13 @@ import { Server } from "socket.io";
 import cors from "cors";
 
 import api from "./src/router";
-import oauth from "./src/router/auth";
 import dotEnv from "./config";
 import authMiddleware from "./src/middleware/authMiddleware";
 import appsVersionController from "./src/controllers/appsVersionController";
 
 import { SocketInit } from "./src/connections/socket";
 import { migrateServices } from "./src/migrator";
+import clientController from "./src/controllers/v1_0/clientController";
 
 dotEnv();
 const port = process.env.PORT || 9000;
@@ -35,10 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 //get request parameter from multipart/form-data
 app.use("/migrate",migrateServices)
+app.use("/register",clientController.registerClient)
 
 app.use("/api", authMiddleware, api);
-
-app.use("/oauth", oauth);
 
 app.use("/static", express.static(process.cwd() + "/static"));
 app.get("/download", function (req, res) {
@@ -58,10 +57,6 @@ if (process.env.NODE_ENV === "development") {
 // get root directory
 export const rootPath = __dirname;
 
-// process.on("uncaughtException", (e) => {
-// 	errorHandler(e);
-// process.exit(1);
-// });
 
 console.log(`server run on ${process.env.NODE_ENV} mode on port ${port}`);
 

@@ -62,7 +62,7 @@ const clients = createQuery({
 const room = createQuery({
     table_name: "room",
     columns: ["data JSONB","is_deleted BOOLEAN"],
-    references: ["client_id UUID REFERENCES clients"]
+    references: ["clients_id UUID REFERENCES clients"]
 })
 const activity_log = createQuery({
     table_name:"activity_log",

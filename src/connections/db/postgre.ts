@@ -4,7 +4,6 @@ import { Pool, QueryResult } from "pg";
 import * as generalType from "../../interfaces/general_interface";
 
 const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
-
 const pool = new Pool({
 	host: PGHOST,
 	user: PGUSER,
@@ -26,7 +25,7 @@ type paramType = Array<
 type queryResultType = QueryResult<generalType.unknownObjectType>;
 
 pool.on("connect", (client) => {
-	client.query("SET SEARCH_PATH TO rms");
+	client.query("SET SEARCH_PATH TO public");
 });
 
 const query = async (

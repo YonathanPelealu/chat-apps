@@ -12,17 +12,24 @@ const updateUserInRoom = async (room_id:string,action:actionType,user_id:string)
     }
 }
 
-const getRoomLists = async (user_id:string,client_id:string):Promise<anyObjectType> => {
+const getRoomLists = async (client_id:string,type?:string,user_id?:string):Promise<anyObjectType> => {
     try {
-        return await roomService.getRoomLists(user_id,client_id)
+        return await roomService.getRoomLists(client_id,type,user_id)
     } catch (e) {
         throw new Error(e)
     }
 }
 
-const createRoom = async (client_id:string,data:roomDataType) => {
+const createRoom = async (client_id:string,data:roomDataType):Promise<anyObjectType> => {
     try {
         return await roomService.createRoom(client_id,data)
+    } catch (e) {
+        throw new Error(e)
+    }
+}
+const getRoomTypeLists = async (clients_id:string):Promise<anyObjectType> => {
+    try {
+        return await roomService.getRoomTypeLists(clients_id)
     } catch (e) {
         throw new Error(e)
     }
@@ -30,5 +37,6 @@ const createRoom = async (client_id:string,data:roomDataType) => {
 export default {
     updateUserInRoom,
     getRoomLists,
-    createRoom
+    createRoom,
+    getRoomTypeLists
 }
