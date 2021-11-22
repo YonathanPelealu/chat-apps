@@ -1,0 +1,28 @@
+---Mon Nov 22 2021 23:18:40 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 23:23:16 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 23:27:09 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:23:04 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:23:51 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:24:11 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:34:11 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:43:27 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:46:41 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:46:51 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:47:02 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:47:07 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 00:48:53 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 22P02, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Tue Nov 23 2021 05:10:36 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 23503, Detail : Key (room_id)=(fedcac75-904a-4d8c-98f2-70d549c82412) is not present in table "room"., Where : undefined, Table : messages, Column : undefined, Constraint : messages_room_id_fkey}
