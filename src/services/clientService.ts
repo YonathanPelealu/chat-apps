@@ -19,7 +19,7 @@ const validateClientID = async (data:PayloadType):Promise<any> => {
     const { client_id, client_key, client_secret } = data;
     try {
         const query = `
-        SELECT id 
+        SELECT id as client_id, clients.data->>'name' as client_name
         FROM clients 
         WHERE clients.data->>'client_id' = $1 
         AND clients.data->>'client_key' = $2 
@@ -27,7 +27,7 @@ const validateClientID = async (data:PayloadType):Promise<any> => {
         AND clients.is_active = true`;
         const params = [client_id, client_key, client_secret];
         const {rows} = await db.query(query,params)
-        if (rows[0]) {return {client_id : rows[0].id}} else {return false}
+        if (rows[0]) {return rows[0]} else {return false}
     } catch (e) {
         throw new Error(e)
     }

@@ -34,6 +34,7 @@ const authMiddleware: (
 		if (validSecret && validKey) {
 			let result = await validateClientID(payload)
 			result.user_id = user_id;
+			console.log(result)
 			result.client_id ? req.client = result : res.json('invalid client_id');
 
 			next()

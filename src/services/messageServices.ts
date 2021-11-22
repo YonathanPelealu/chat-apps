@@ -22,7 +22,7 @@ const addMessage = async (data: messageDataType): Promise<snackbarType> => {
 };
 const getMessageOnRoom = async (room_id: string): Promise<anyObjectType> => {
 	try {
-		const query = `SELECT * FROM messages WHERE message.room_id = $1 AND messages.is_active = true`;
+		const query = `SELECT * FROM messages WHERE messages.room_id = $1 AND messages.is_active = true`;
 		const params = [room_id];
 		const { rows } = await db.query(query, params);
 		return rows;

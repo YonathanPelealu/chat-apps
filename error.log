@@ -90,3 +90,5 @@ Name: error, Code: 22P02, Detail : Token "user1" is invalid., Where : JSON data,
 Name: error, Code: 42601, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
 ---Mon Nov 22 2021 03:04:21 GMT+0700 (Western Indonesia Time)---
 Name: error, Code: 42883, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}
+---Mon Nov 22 2021 18:00:43 GMT+0700 (Western Indonesia Time)---
+Name: error, Code: 42P01, Detail : undefined, Where : undefined, Table : undefined, Column : undefined, Constraint : undefined}

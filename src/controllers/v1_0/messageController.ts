@@ -17,16 +17,15 @@ const addMessage: initFunc = async (req, res) => {
 	}
 };
 const getMessageOnRoom: initFunc = async (req, res) => {
-	const { CLIENT_ID } = req.headers;
 	const { room_id } = req.query;
+	const { client_name } = req.client;
 
-	if (CLIENT_ID === "kriya") {
+	if (client_name === "kriya") {
 		socketNS["kriya"].on("connection", (socket) => {
 			socket.join(room_id);
 			socket.to(room_id).emit("message", "socket connected");
 		});
 	}
-
 	try {
 		const result = await messageModel.getMessageOnRoom(room_id);
 		res.json(result);
