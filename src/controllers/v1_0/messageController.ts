@@ -19,6 +19,7 @@ const addMessage: initFunc = async (req, res) => {
 const getMessageOnRoom: initFunc = async (req, res) => {
 	const { client_id } = req.headers;
 	const { room_id } = req.query;
+	const { client_name } = req.client;
 
 	if (client_id === "kriya") {
 		socketNS["kriya"].on("connection", (socket) => {
@@ -33,7 +34,6 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 			});
 		});
 	}
-
 	try {
 		const result = await messageModel.getMessageOnRoom(room_id);
 		res.json(result);
