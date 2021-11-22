@@ -37,12 +37,26 @@ const getCurrentUserInRoom = async (
     }
 }
 const getRoomLists = async (
-    user_id:string,
-    client_id:string
+    client_id:string,
+    type?:string,
+    user_id?:string
 ):Promise<anyObjectType> => {
     try {
-        const query = `SELECT * FROM room WHERE room.clients_id = $1 AND user_id = any(room.data->>"user_ids")`;
-        const params = [client_id,user_id]
+        let count = 1;
+        let query = `SELECT * FROM room WHERE room.clients_id = $1 AND room.is_active = true AND room.is_deleted = false`;
+        let params = [client_id]
+
+        if (type) {
+            count ++
+            query += ` AND room.data->>'type' = $${count}`;
+            params.push(type)
+        }
+        if (user_id) {
+            count ++
+            query += ` AND $${count} = ANY(json_array_elements(room.data->'user_ids'))`
+            // json_array_elements(room.data->'user_ids') <--
+            params.push(user_id)
+        }
         const {rows} = await db.query(query,params)
         return rows
     } catch (e) {
@@ -55,7 +69,7 @@ const createRoom = async (
 ):Promise<snackbarType> => {
     try {
         let message:string = "";
-            const query =`INSERT INTO room (client_id,data,is_deleted) VALUES ($1,$2,$3)`;
+            const query =`INSERT INTO room (clients_id,data,is_deleted) VALUES ($1,$2,$3)`;
             const params = [client_id,data,false]
             const result = await db.query(query,params)
             result ? message = 'success add new room' : message = 'failed add new room';
@@ -64,9 +78,20 @@ const createRoom = async (
         throw new Error(e)
     }
 }
+const getRoomTypeLists = async (clients_id:string):Promise<anyObjectType> => {
+    try {
+        const query = `SELECT clients.data->>'chat_type' as type FROM clients WHERE id = $1`;
+        const params = [clients_id];
+        const {rows} = await db.query(query,params);
+        return (rows);
+    } catch (e) {
+        throw new Error(e)
+    }
+}
 export default {
     updateUserInRoom,
     getCurrentUserInRoom,
     getRoomLists,
-    createRoom
+    createRoom,
+    getRoomTypeLists
 };

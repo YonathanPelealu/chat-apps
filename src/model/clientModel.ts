@@ -16,7 +16,6 @@ const registerClient = async (name:string,chat_type:string[],description:string)
             client_secret,
             description
         };
-
         return await clientService.registerClient(data)
 
     } catch (e) {
