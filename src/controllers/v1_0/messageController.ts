@@ -26,14 +26,19 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 	const { room_id } = req.query;
 
 	if (client_id === "kriya") {
-		socketNS["kriya"].on("connection", (socket) => {
-			console.log("client connected", socket.id);
-			socket.join(room_id);
-			socket.on("disconnect", () => {
-				console.log("client disconected", socket.id);
+		if (socketNS["kriya"].listenerCount("connection") < 1) {
+			socketNS["kriya"].on("connection", (socket) => {
+				socket.on("join", (room) => {
+					console.log(`client socket_id: ${socket.id} joining room: ${room}`);
+					socket.join(room);
+				});
+				socket.on("disconnect", () => {
+					console.log("client disconected", socket.id);
+				});
 			});
-		});
+		}
 	}
+
 	try {
 		const result = await messageModel.getMessageOnRoom(room_id);
 		res.json(result);
