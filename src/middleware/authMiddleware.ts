@@ -26,15 +26,21 @@ const authMiddleware: (
 	res: anyObjectType,
 	next: () => void
 ) => Promise<void> = async (req, res, next) => {
+	const client_key = req.headers["client-key"];
+	const client_secret = req.headers["client-secret"];
+	const user_id = req.headers["user-id"];
+
+	console.log({ client_key, client_secret, user_id });
+
 	try {
-		const validKey = req.headers["client_key"].length >= 12;
-		const validSecret = req.headers["client-secret"].length >= 12;
+		const validKey = client_key.length >= 12;
+		const validSecret = client_secret.length >= 12;
 
 		if (validSecret && validKey) {
 			let result = await validateClientID(req.headers.payload);
 
 			if (result?.client_id) {
-				result.user_id = req.headers["user-id"];
+				result.user_id = user_id;
 				req.client = result;
 
 				next();
