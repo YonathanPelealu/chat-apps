@@ -9,10 +9,10 @@
 		"dev-debug": "NODE_ENV=development nodemon server.ts --use_strict",
 		"dev-debug-staging": "NODE_ENV=staging nodemon server.ts --use_strict",
 		"dev-debug-win": "SET NODE_ENV=development&& nodemon server.ts --use_strict",
-		"dev-build-local": "npm run build&& SET NODE_ENV=development&& pm2 start ./build/server.js --name ams-server-dev-build",
-		"dev-build": "npm run build && NODE_ENV=development pm2 start ./build/server.js --name ams-server-dev-build",
-		"staging": "npm run build && NODE_ENV=staging pm2 start ./build/server.js --name ams-server-dev-staging",
-		"prod": "npm run build && NODE_ENV=production pm2 start ./build/server.js --name ams-server-dev-production",
+		"dev-build-local": "npm run build&& SET NODE_ENV=development&& pm2 start ./build/server.js --name chat-server-dev-build",
+		"dev-build": "npm run build && NODE_ENV=development pm2 start ./build/server.js --name chat-server-dev-build",
+		"staging": "npm run build && NODE_ENV=staging pm2 start ./build/server.js --name chat-server-dev-staging",
+		"prod": "npm run build && NODE_ENV=production pm2 start ./build/server.js --name chat-server-dev-production",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
