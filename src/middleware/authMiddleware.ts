@@ -26,6 +26,7 @@ const authMiddleware: (
 	res: anyObjectType,
 	next: () => void
 ) => Promise<void> = async (req, res, next) => {
+	const client_id = req.headers["client-id"];
 	const client_key = req.headers["client-key"];
 	const client_secret = req.headers["client-secret"];
 	const user_id = req.headers["user-id"];
@@ -37,7 +38,12 @@ const authMiddleware: (
 		const validSecret = client_secret.length >= 12;
 
 		if (validSecret && validKey) {
-			let result = await validateClientID(req.headers.payload);
+			let result = await validateClientID({
+				client_id,
+				client_key,
+				client_secret,
+				user_id,
+			});
 
 			if (result?.client_id) {
 				result.user_id = user_id;
