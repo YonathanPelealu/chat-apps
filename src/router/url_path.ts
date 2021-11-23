@@ -8,3 +8,6 @@ export const roomPath = {
     updateUser: "/room/update-user",
     getTypeLists: "/room/type-lists"
 }
+export const lastMsgPath = {
+    get: "/last-message"
+}

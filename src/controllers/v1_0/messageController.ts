@@ -5,16 +5,21 @@ import constant from "../../constants/general";
 import { socketNS } from "../../connections/socket";
 
 const addMessage: initFunc = async (req, res) => {
+	const { client_id, user_id } = req.client;
+	const { room_id } = req.query;
 	try {
-		const data: messageDataType = { ...req.body };
-		const { room_id } = data;
-		const { message } = await messageModel.addMessage(data);
+		let data: messageDataType = { ...req.body };
+		
+		data.room_id = room_id;
+		data.sent_by = user_id;
+
+		const rs = await messageModel.addMessage(client_id,data);
 		if (req.headers["client-id"] === "kriya") {
 			socketNS["kriya"].to(room_id).emit("message", data);
 		}
 		res.json({
 			status: constant.RESPONSE_STATUS_SUCCESS,
-			message,
+			message:rs
 		});
 	} catch (e) {
 		res.constant;

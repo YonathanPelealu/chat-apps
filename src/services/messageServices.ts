@@ -5,17 +5,14 @@ import {
 } from "../interfaces/general_interface";
 import db from "../connections/db/postgre";
 
-const addMessage = async (data: messageDataType): Promise<snackbarType> => {
+const addMessage = async (data: messageDataType): Promise<anyObjectType> => {
 	let message: string = "";
 	try {
 		const { room_id, sent_by, path, text, is_deleted } = data;
-		const query = `INSERT INTO messages (room_id,sent_by,path,text,is_deleted) VALUES ($1,$2,$3,$4,$5)`;
+		const query = `INSERT INTO messages (room_id,sent_by,path,text,is_deleted) VALUES ($1,$2,$3,$4,$5) RETURNING id`;
 		const params = [room_id, sent_by, path, text, is_deleted];
-		const res = await db.query(query, params);
-		res
-			? (message = "success send message")
-			: (message = "Failed send message");
-		return { message };
+		const {rows} = await db.query(query, params);
+		return rows[0]
 	} catch (e) {
 		throw new Error(e);
 	}

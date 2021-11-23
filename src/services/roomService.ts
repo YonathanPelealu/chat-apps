@@ -53,7 +53,7 @@ const getRoomLists = async (
         }
         if (user_id) {
             count ++
-            query += ` AND $${count} = ANY(json_array_elements(room.data->'user_ids'))`
+            query += ` AND room.data->'user_ids' ? $${count}`
             // json_array_elements(room.data->'user_ids') <--
             params.push(user_id)
         }
