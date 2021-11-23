@@ -5,12 +5,11 @@ import constant from "../../constants/general";
 import { socketNS } from "../../connections/socket";
 
 const addMessage: initFunc = async (req, res) => {
-	const { client_id } = req.headers;
 	try {
 		const data: messageDataType = { ...req.body };
 		const { room_id } = data;
 		const { message } = await messageModel.addMessage(data);
-		if (client_id === "kriya") {
+		if (req.headers["client-id"] === "kriya") {
 			socketNS["kriya"].to(room_id).emit("message", data);
 		}
 		res.json({
@@ -22,10 +21,9 @@ const addMessage: initFunc = async (req, res) => {
 	}
 };
 const getMessageOnRoom: initFunc = async (req, res) => {
-	const { client_id } = req.headers;
 	const { room_id } = req.query;
 
-	if (client_id === "kriya") {
+	if (req.headers["client-id"] === "kriya") {
 		if (socketNS["kriya"].listenerCount("connection") < 1) {
 			socketNS["kriya"].on("connection", (socket) => {
 				socket.on("join", (room) => {
