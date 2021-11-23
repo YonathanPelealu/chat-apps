@@ -31,7 +31,7 @@ const authMiddleware: (
 	const client_secret = req.headers["client-secret"];
 	const user_id = req.headers["user-id"];
 
-	console.log({ client_key, client_secret, user_id });
+	console.log({ client_id, client_key, client_secret, user_id });
 
 	try {
 		const validKey = client_key.length >= 12;
