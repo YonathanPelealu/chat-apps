@@ -6,7 +6,6 @@ import {
 import db from "../connections/db/postgre";
 
 const addMessage = async (data: messageDataType): Promise<anyObjectType> => {
-	let message: string = "";
 	try {
 		const { room_id, sent_by, path, text, is_deleted } = data;
 		const query = `INSERT INTO messages (room_id,sent_by,path,text,is_deleted) VALUES ($1,$2,$3,$4,$5) RETURNING id`;

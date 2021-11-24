@@ -39,13 +39,14 @@ const getLatestMessageForRoom = async (room_id:string):Promise<anyObjectType> =>
     try {
         const query = `
         SELECT 
-        m_data.* as message_data,
+        m_data.*,
         room.data->>'name' as room_name
         FROM room_latest_msg rlm
         LEFT JOIN (
             SELECT 
                 id ,
                 text ,
+                path,
                 sent_by 
             FROM messages
         ) m_data on m_data.id = rlm.message_id

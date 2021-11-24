@@ -14,7 +14,6 @@ const addMessage = async (
         const response = last_msg.length == 0
         ? await roomLatestMsgService.createLatestMsgInRoom(data.room_id,msg.id,data.sent_by) 
         : await roomLatestMsgService.updateLatestMsgInRoom(data.room_id,msg.id)
-        console.log(response)
         return response
     } catch (e) {
         throw new Error(e)
