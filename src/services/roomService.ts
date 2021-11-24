@@ -58,7 +58,7 @@ const getRoomLists = async (
 		}
 		if (user_id) {
 			count++;
-			query += ` AND $${count} = ANY(room.user_ids::text[])`;
+			query += ` AND room.data->'user_ids' ? $${count}`;		
 			params.push(user_id);
 		}
 		const { rows } = await db.query(query, params);

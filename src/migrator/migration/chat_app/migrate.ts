@@ -69,10 +69,10 @@ const room = createQuery({
 	references: ["clients_id UUID REFERENCES clients"],
 });
 const activity_log = createQuery({
-	table_name: "activity_log",
-	columns: ["user_id TEXT"],
-	references: ["clients_id UUID REFERENCES clients"],
-});
+    table_name:"activity_log",
+    columns: ["user_id TEXT"],
+    references:["clients_id UUID REFERENCES clients, room_id UUID REFERENCES room"]
+})
 const messages = createQuery({
 	table_name: "messages",
 	columns: ["path TEXT", "text TEXT", "sent_by TEXT", "is_deleted BOOLEAN"],

@@ -3,9 +3,13 @@ export const chatPath = {
 	getChat: "/chat/lists",
 };
 export const roomPath = {
-	createRoom: "/room/create",
-	getRoomLists: "/room/lists",
+    createRoom: "/room/create",
+    getRoomLists: "/room/lists",
+    updateUser: "/room/update-user",
+    getTypeLists: "/room/type-lists",
 	getRoomById: "/room/getRoomById",
-	updateUser: "/room/update-user",
-	getTypeLists: "/room/type-lists",
+
+}
+export const lastMsgPath = {
+    get: "/last-message"
 };
