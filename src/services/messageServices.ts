@@ -8,9 +8,9 @@ import db from "../connections/db/postgre";
 const addMessage = async (data: messageDataType): Promise<snackbarType> => {
 	let message: string = "";
 	try {
-		const { room_id, sent_by, path, text, is_deleted } = data;
-		const query = `INSERT INTO messages (room_id,sent_by,path,text,is_deleted) VALUES ($1,$2,$3,$4,$5)`;
-		const params = [room_id, sent_by, path, text, is_deleted];
+		const { room_id, sent_by, path, text } = data;
+		const query = `INSERT INTO messages (room_id,sent_by,path,text) VALUES ($1,$2,$3,$4)`;
+		const params = [room_id, sent_by, path, text];
 		const res = await db.query(query, params);
 		res
 			? (message = "success send message")

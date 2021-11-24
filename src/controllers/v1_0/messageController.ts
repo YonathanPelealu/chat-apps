@@ -6,11 +6,16 @@ import { socketNS } from "../../connections/socket";
 
 const addMessage: initFunc = async (req, res) => {
 	try {
+		const { user_id } = req.client;
 		const data: messageDataType = { ...req.body };
 		const { room_id } = data;
-		const { message } = await messageModel.addMessage(data);
+		const message_data = {
+			...data,
+			sent_by: user_id,
+		};
+		const { message } = await messageModel.addMessage(message_data);
 		if (req.headers["client-id"] === "kriya") {
-			socketNS["kriya"].to(room_id).emit("message", data);
+			socketNS["kriya"].to(room_id).emit("message", message_data);
 		}
 		res.json({
 			status: constant.RESPONSE_STATUS_SUCCESS,
