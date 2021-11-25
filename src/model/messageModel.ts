@@ -20,9 +20,10 @@ const addMessage = async (
         throw new Error(e)
     }
 }
-const getMessageOnRoom = async (room_id:string):Promise<anyObjectType> => {
+const getMessageOnRoom = async (room_id:string,page:string):Promise<anyObjectType> => {
     try {
-        return await messageServices.getMessageOnRoom(room_id)
+        const limitMsg = Number(page) * 10
+        return await messageServices.getMessageOnRoom(room_id,Number(limitMsg))
     } catch (e) {
         throw new Error(e)
     }
