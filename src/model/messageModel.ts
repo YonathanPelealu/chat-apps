@@ -22,7 +22,7 @@ const addMessage = async (
 }
 const getMessageOnRoom = async (room_id:string,page:string):Promise<anyObjectType> => {
     try {
-        return await messageServices.getMessageOnRoom(room_id,Number(page))
+        return await messageServices.getMessageOnRoom(room_id,page)
     } catch (e) {
         throw new Error(e)
     }
