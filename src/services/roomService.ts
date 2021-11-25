@@ -48,7 +48,24 @@ const getRoomLists = async (
 ): Promise<anyObjectType> => {
 	try {
 		let count = 1;
-		let query = `SELECT * FROM room WHERE room.clients_id = $1 AND room.is_active = true AND room.is_deleted = false`;
+		let query = `
+		SELECT 
+			room.id as id,
+			room.data as data,
+			room.user_ids as user_ids,
+			JSON_BUILD_OBJECT(
+				'message_id',messages.id,
+				'text',messages.text,
+				'path',messages.path,
+				'is_deleted',messages.is_deleted
+				) AS latest_msg_data
+		FROM room 
+		LEFT JOIN room_latest_msg on room.id = room_latest_msg.room_id
+		LEFT JOIN messages on room_latest_msg.message_id = messages.id
+		WHERE room.clients_id = $1 
+		AND room.is_active = true 
+		AND room.is_deleted = false
+		`;
 		let params = [client_id];
 
 		if (type) {
@@ -61,6 +78,7 @@ const getRoomLists = async (
 			query += ` AND room.data->'user_ids' ? $${count}`;		
 			params.push(user_id);
 		}
+		query += `ORDER BY room_latest_msg.updated_at asc`;
 		const { rows } = await db.query(query, params);
 		return rows;
 	} catch (e) {

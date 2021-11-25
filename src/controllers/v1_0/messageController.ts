@@ -9,10 +9,11 @@ const addMessage: initFunc = async (req, res) => {
 	const { room_id } = req.query;
 	try {
 		const data: messageDataType = { ...req.body };
-		const { room_id } = data;
 		const message_data = {
 			...data,
 			sent_by: user_id,
+			is_deleted:false,
+			room_id
 		};
 		const { message } = await messageModel.addMessage(client_id,message_data);
 		if (req.headers["client-id"] === "kriya") {
@@ -27,7 +28,7 @@ const addMessage: initFunc = async (req, res) => {
 	}
 };
 const getMessageOnRoom: initFunc = async (req, res) => {
-	const { room_id } = req.query;
+	const { room_id,page } = req.query;
 
 	if (req.headers["client-id"] === "kriya") {
 		if (socketNS["kriya"].listenerCount("connection") < 1) {
@@ -44,7 +45,7 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 	}
 
 	try {
-		const result = await messageModel.getMessageOnRoom(room_id);
+		const result = await messageModel.getMessageOnRoom(room_id,page);
 		res.json(result);
 	} catch (e) {
 		res.json({
