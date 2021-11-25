@@ -1,4 +1,5 @@
 import { anyObjectType, messageDataType, snackbarType } from "../interfaces/general_interface"
+import lastMsg from "../router/v1_0/lastMessage";
 import activityLogService from "../services/activityLogService"
 import messageServices from "../services/messageServices"
 import roomLatestMsgService from "../services/roomLatestMsgService";
@@ -11,9 +12,9 @@ const addMessage = async (
         const msg = await messageServices.addMessage(data);
         await activityLogService.addActivityLog(client_id,data.sent_by,data.room_id)
         const last_msg = await roomLatestMsgService.checkExistingRoom(data.room_id)
-        const response = last_msg.length == 0
-        ? await roomLatestMsgService.createLatestMsgInRoom(data.room_id,msg.id,data.sent_by) 
-        : await roomLatestMsgService.updateLatestMsgInRoom(data.room_id,msg.id)
+        const response = last_msg.length > 0
+        ? await roomLatestMsgService.updateLatestMsgInRoom(data.room_id,data.sent_by,msg.id)
+        : await roomLatestMsgService.createLatestMsgInRoom(data.room_id,data.sent_by,msg.id) 
         return response
     } catch (e) {
         throw new Error(e)

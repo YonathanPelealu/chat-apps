@@ -9,10 +9,11 @@ const addMessage: initFunc = async (req, res) => {
 	const { room_id } = req.query;
 	try {
 		const data: messageDataType = { ...req.body };
-		const { room_id } = data;
 		const message_data = {
 			...data,
 			sent_by: user_id,
+			is_deleted:false,
+			room_id
 		};
 		const { message } = await messageModel.addMessage(client_id,message_data);
 		if (req.headers["client-id"] === "kriya") {
