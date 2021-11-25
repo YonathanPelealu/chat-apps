@@ -16,8 +16,9 @@ const addMessage = async (data: messageDataType): Promise<anyObjectType> => {
 		throw new Error(e);
 	}
 };
-const getMessageOnRoom = async (room_id: string,offset:number): Promise<anyObjectType> => {
+const getMessageOnRoom = async (room_id: string,page:string): Promise<anyObjectType> => {
 	try {
+		const offset = Number(page) * 20
 		const query = `
 		SELECT * 
 		FROM messages 
