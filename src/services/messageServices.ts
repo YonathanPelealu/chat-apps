@@ -24,7 +24,7 @@ const getMessageOnRoom = async (room_id: string,offset:number): Promise<anyObjec
 		WHERE messages.room_id = $1 
 		AND messages.is_active = true 
 		ORDER BY created_at DESC
-		LIMIT $2
+		LIMIT 20 OFFSET $2
 		`;
 		const params = [room_id,offset];
 		const { rows } = await db.query(query, params);
