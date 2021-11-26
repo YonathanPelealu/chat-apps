@@ -9,7 +9,7 @@ const createLatestMsgInRoom = async (room_id:string,message_id:string,user_id:st
         const rows = await db.query(query,params);
         response = rows.rowCount > 0 ? 'message sent' : `failed send message`   
         return response 
-    } catch (e) {
+    } catch (e) { 
         throw new Error(e)
     }
 }
