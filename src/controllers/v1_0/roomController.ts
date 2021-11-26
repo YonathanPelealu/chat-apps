@@ -58,11 +58,13 @@ const getRoomById: initFunc = async (req, res) => {
 const createRoom: initFunc = async (req, res) => {
 	const { client_id } = req.client;
 	try {
-		const data: roomDataType = { ...req.body };
-		const { message } = await roomService.createRoom(client_id, data);
+		const data: roomDataType = req.body;
+
+		const { message, id } = await roomService.createRoom(client_id, data);
 		res.json({
 			status: constant.RESPONSE_STATUS_SUCCESS,
 			message,
+			id,
 		});
 	} catch (e) {
 		res.json({

@@ -75,7 +75,7 @@ const getRoomLists = async (
 		}
 		if (user_id) {
 			count++;
-			query += ` AND room.data->'user_ids' ? $${count}`;		
+			query += ` AND $${count} = ANY(room.user_ids)`;
 			params.push(user_id);
 		}
 		query += `ORDER BY room_latest_msg.updated_at asc`;
@@ -100,16 +100,23 @@ const getRoomById = async (room_id: string): Promise<anyObjectType> => {
 const createRoom = async (
 	client_id: string,
 	data: roomDataType
-): Promise<snackbarType> => {
+): Promise<anyObjectType> => {
 	try {
+		const query = `INSERT INTO room (clients_id,data, is_deleted, user_ids) VALUES ($1,$2,$3,$4) RETURNING id`;
 		let message: string = "";
-		const query = `INSERT INTO room (clients_id,data,is_deleted) VALUES ($1,$2,$3)`;
-		const params = [client_id, data, false];
-		const result = await db.query(query, params);
+		const params = [
+			client_id,
+			{ type: data.type, name: data.name },
+			false,
+			data.user_ids,
+		];
+		const result: any = await db.query(query, params);
+
 		result
 			? (message = "success add new room")
 			: (message = "failed add new room");
-		return { message };
+
+		return { message, id: result.rows[0].id };
 	} catch (e) {
 		throw new Error(e);
 	}
