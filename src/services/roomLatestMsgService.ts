@@ -18,7 +18,6 @@ const checkExistingRoom = async(room_id:string):Promise<anyObjectType> => {
         const query = `SELECT * from room_latest_msg where room_id = $1`;
         const params = [room_id]
         const {rows} = await db.query(query,params)
-        console.log(params)
         return rows
     } catch (e) {
         throw new Error(e)
@@ -54,18 +53,18 @@ const getLatestMessageForRoom = async (room_id:string):Promise<anyObjectType> =>
         LEFT JOIN room on rlm.room_id = room.id
         WHERE rlm.room_id = $1
         `;
-        const params = [room_id];
-        const {rows} = await db.query(query,params)
-		console.log('messages on latest')
+		const params = [room_id];
+		const { rows } = await db.query(query, params);
+		console.log("messages on latest");
 
-        return rows
-    } catch (e) {
-        throw new Error(e)
-    }
-}
+		return rows;
+	} catch (e) {
+		throw new Error(e);
+	}
+};
 export default {
-    updateLatestMsgInRoom,
-    createLatestMsgInRoom,
-    checkExistingRoom,
-    getLatestMessageForRoom
-}
+	updateLatestMsgInRoom,
+	createLatestMsgInRoom,
+	checkExistingRoom,
+	getLatestMessageForRoom,
+};
