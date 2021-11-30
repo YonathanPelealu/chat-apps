@@ -57,7 +57,8 @@ const getRoomLists = async (
 				'message_id',messages.id,
 				'text',messages.text,
 				'path',messages.path,
-				'is_deleted',messages.is_deleted
+				'is_deleted',messages.is_deleted,
+				'last_update',room_latest_msg.updated_at
 				) AS latest_msg_data
 		FROM room 
 		LEFT JOIN room_latest_msg on room.id = room_latest_msg.room_id

@@ -3,15 +3,21 @@ import messageModel from "../../model/messageModel";
 import { initFunc } from "./interface";
 import constant from "../../constants/general";
 import { socketNS } from "../../connections/socket";
+import convert from "../helper/compressImage";
 
 const addMessage: initFunc = async (req, res) => {
 	const { client_id, user_id } = req.client;
 	const { room_id } = req.query;
 	try {
 		const data: messageDataType = { ...req.body };
-
+		let result = '';
+		if (req.file){
+			const filePath = `static/uploads/${req.file.filename}`;
+			result = convert.convertToWebp(filePath, filePath);
+		};
 		const message_data = {
 			...data,
+			path: result,
 			sent_by: user_id,
 			is_deleted: false,
 		};
