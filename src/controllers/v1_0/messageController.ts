@@ -7,14 +7,16 @@ import convert from "../helper/compressImage";
 
 const addMessage: initFunc = async (req, res) => {
 	const { client_id, user_id } = req.client;
-	const { room_id } = req.query;
+	let result = "";
+
 	try {
 		const data: messageDataType = { ...req.body };
-		let result = '';
-		if (req.file){
+		const { room_id } = data;
+
+		if (req.file) {
 			const filePath = `static/uploads/${req.file.filename}`;
 			result = convert.convertToWebp(filePath, filePath);
-		};
+		}
 		const message_data = {
 			...data,
 			path: result,
@@ -27,12 +29,16 @@ const addMessage: initFunc = async (req, res) => {
 		}
 
 		const { message } = await messageModel.addMessage(client_id, message_data);
+
 		res.json({
 			status: constant.RESPONSE_STATUS_SUCCESS,
 			message,
 		});
 	} catch (e) {
-		res.constant;
+		res.json({
+			status: constant.RESPONSE_STATUS_FAILED,
+			message: e.toString(),
+		});
 	}
 };
 
@@ -42,9 +48,17 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 	if (req.headers["client-id"] === "kriya") {
 		if (socketNS["kriya"].listenerCount("connection") < 1) {
 			socketNS["kriya"].on("connection", (socket) => {
-				socket.on("join", (room) => {
-					console.log(`client socket_id: ${socket.id} joining room: ${room}`);
-					socket.join(room);
+				socket.on("join", (room_id) => {
+					socket.join(room_id);
+					console.log(
+						`client socket_id: ${socket.id} joining room: ${room_id}`
+					);
+				});
+				socket.on("leave", (room_id) => {
+					socket.leave(room_id);
+					console.log(
+						`client socket_id: ${socket.id} leaving room: ${room_id}`
+					);
 				});
 				socket.on("disconnect", () => {
 					console.log("client disconected", socket.id);

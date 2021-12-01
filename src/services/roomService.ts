@@ -49,7 +49,7 @@ const getRoomLists = async (
 	try {
 		let count = 1;
 		let query = `
-		SELECT 
+		SELECT
 			room.id as id,
 			room.data as data,
 			room.user_ids as user_ids,
@@ -59,10 +59,10 @@ const getRoomLists = async (
 				'path',messages.path,
 				'is_deleted',messages.is_deleted,
 				'last_update',room_latest_msg.updated_at
-				) AS latest_msg_data
+			) AS latest_msg_data
 		FROM room 
-		LEFT JOIN room_latest_msg on room.id = room_latest_msg.room_id
-		LEFT JOIN messages on room_latest_msg.message_id = messages.id
+		LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
+		LEFT JOIN messages ON messages.id = room_latest_msg.message_id
 		WHERE room.clients_id = $1 
 		AND room.is_active = true 
 		AND room.is_deleted = false
