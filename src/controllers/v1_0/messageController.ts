@@ -6,15 +6,16 @@ import { socketNS } from "../../connections/socket";
 import convert from "../helper/compressImage";
 
 const addMessage: initFunc = async (req, res) => {
+	console.log(req);
 	const { client_id, user_id } = req.client;
 	const { room_id } = req.query;
 	try {
 		const data: messageDataType = { ...req.body };
-		let result = '';
-		if (req.file){
+		let result = "";
+		if (req.file) {
 			const filePath = `static/uploads/${req.file.filename}`;
 			result = convert.convertToWebp(filePath, filePath);
-		};
+		}
 		const message_data = {
 			...data,
 			path: result,
@@ -35,10 +36,13 @@ const addMessage: initFunc = async (req, res) => {
 		res.constant;
 	}
 };
-
+export type getMessageDataType = {
+	room_id: string;
+	page: string;
+	client_id: string;
+	user_id: string;
+};
 const getMessageOnRoom: initFunc = async (req, res) => {
-	const { room_id, page } = req.query;
-
 	if (req.headers["client-id"] === "kriya") {
 		if (socketNS["kriya"].listenerCount("connection") < 1) {
 			socketNS["kriya"].on("connection", (socket) => {
@@ -54,9 +58,10 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 	}
 
 	try {
-		const result = await messageModel.getMessageOnRoom(room_id, page);
+		const data: getMessageDataType = { ...req.query, ...req.client };
+		const result = await messageModel.getMessageOnRoom(data);
 		res.json(result);
-	} catch (e) {
+	} catch (e: any) {
 		res.json({
 			status: constant.RESPONSE_STATUS_FAILED,
 			message: e.toString(),
