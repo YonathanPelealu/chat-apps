@@ -52,7 +52,7 @@ const getRoomLists = async (
 		from activity_log
 		where user_id = $1`,[user_id])
 		const { last_seen }:any = check.rows[0]
-		console.log(client_id)
+		
 		let query = `
 		SELECT room.id id,
 						room.data as data,
@@ -89,7 +89,7 @@ const getRoomLists = async (
 		`;
 		let params = [client_id, user_id, type,last_seen];
 		let { rows }:any = await db.query(query, params);
-		console.log(rows)
+		console.log(rows,{last_seen})
 		// rows = {
 		// 	activity:{
 		// 		unread_count: rows.activity.unread_count ? rows.activity.unread_count : 0,
