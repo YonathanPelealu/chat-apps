@@ -27,7 +27,7 @@ const _SocketServer = new Server(socketServer, {
 
 SocketInit(_SocketServer);
 
-socketServer.on("connection", (socket) => {
+_SocketServer.on("connection", (socket) => {
 	console.log("connect from init server");
 
 	socket.on("namespace", (namespace) => {
