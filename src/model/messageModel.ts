@@ -1,8 +1,9 @@
-import { getMessageDataType } from "../controllers/v1_0/messageController";
 import {
 	anyObjectType,
 	messageDataType,
+	snackbarType,
 } from "../interfaces/general_interface";
+import lastMsg from "../router/v1_0/lastMessage";
 import activityLogService from "../services/activityLogService";
 import messageServices from "../services/messageServices";
 import roomLatestMsgService from "../services/roomLatestMsgService";
@@ -37,15 +38,11 @@ const addMessage = async (
 	}
 };
 const getMessageOnRoom = async (
-	data: getMessageDataType
+	room_id: string,
+	page: string
 ): Promise<anyObjectType> => {
-	const { room_id, page, client_id, user_id } = data;
 	try {
-		const [message_lists] = await Promise.all([
-			messageServices.getMessageOnRoom(room_id, page),
-			activityLogService.addActivityLog(client_id, user_id, room_id),
-		]);
-		return message_lists;
+		return await messageServices.getMessageOnRoom(room_id, page);
 	} catch (e) {
 		throw new Error(e);
 	}
