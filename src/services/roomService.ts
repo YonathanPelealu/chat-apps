@@ -47,12 +47,15 @@ const getRoomLists = async (
 	user_id: string
 ): Promise<anyObjectType> => {
 	try {
-		const check = await db.query(`
+		const check = await db.query(
+			`
 		SELECT max(created_at) as last_seen
 		from activity_log
-		where user_id = $1`,[user_id])
-		const { last_seen }:any = check.rows[0]
-		
+		where user_id = $1`,
+			[user_id]
+		);
+		const { last_seen }: any = check.rows[0];
+
 		let query = `
 		SELECT room.id id,
 						room.data as data,
@@ -66,8 +69,7 @@ const getRoomLists = async (
 						) AS latest_msg_data,
 						JSON_BUILD_OBJECT(
 							'unread_count',msg.unread
-						) AS activity,
-					room_latest_msg.updated_at AS last_msg
+						) AS activity
 					FROM room 
 					LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
 					LEFT JOIN messages ON messages.id = room_latest_msg.message_id
@@ -85,17 +87,11 @@ const getRoomLists = async (
 					AND room.data->>'type' = $3
 					AND $2 = ANY(room.user_ids)
 					group by room.id,messages.id,room_latest_msg.updated_at,room_latest_msg.updated_at,msg.unread
-			ORDER BY last_msg
+			ORDER BY room_latest_msg.updated_at
 		`;
-		let params = [client_id, user_id, type,last_seen];
-		let { rows }:any = await db.query(query, params);
-		console.log(rows,{last_seen})
-		// rows = {
-		// 	activity:{
-		// 		unread_count: rows.activity.unread_count ? rows.activity.unread_count : 0,
-		// 		last_seen 
-		// 	}
-		// }
+		let params = [client_id, user_id, type, last_seen];
+		let { rows }: any = await db.query(query, params);
+		rows = { last_seen, room_data: rows };
 		return rows;
 	} catch (e) {
 		throw new Error(e);
