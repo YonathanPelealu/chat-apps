@@ -26,8 +26,8 @@ const updateUserInRoom = async (
 
 const getRoomLists = async (
 	client_id: string,
-	type: string,
-	user_id: string
+	type?: string,
+	user_id?: string
 ): Promise<anyObjectType> => {
 	try {
 		return await roomService.getRoomLists(client_id, type, user_id);
