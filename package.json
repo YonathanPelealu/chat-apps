@@ -7,7 +7,7 @@
 		"build": "tsc --project .",
 		"dev-debug-local": "NODE_ENV=local nodemon server.ts --use_strict",
 		"dev-debug": "NODE_ENV=development nodemon server.ts --use_strict",
-		"dev-debug-staging": "NODE_ENV=staging nodemon server.ts --use_strict",
+		"dev-debug-staging": "SET NODE_ENV=staging&& nodemon server.ts --use_strict",
 		"dev-debug-win": "SET NODE_ENV=development&& nodemon server.ts --use_strict",
 		"dev-build-local": "npm run build&& SET NODE_ENV=development&& pm2 start ./build/server.js --name chat-server-dev-build",
 		"dev-build": "npm run build && NODE_ENV=development pm2 start ./build/server.js --name chat-server-dev-build",

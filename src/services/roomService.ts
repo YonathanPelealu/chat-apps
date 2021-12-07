@@ -43,44 +43,55 @@ const getCurrentUserInRoom = async (
 
 const getRoomLists = async (
 	client_id: string,
-	type?: string,
-	user_id?: string
+	type: string,
+	user_id: string
 ): Promise<anyObjectType> => {
 	try {
-		let count = 1;
-		let query = `
-		SELECT
-			room.id as id,
-			room.data as data,
-			room.user_ids as user_ids,
-			JSON_BUILD_OBJECT(
-				'message_id',messages.id,
-				'text',messages.text,
-				'path',messages.path,
-				'is_deleted',messages.is_deleted,
-				'last_update',room_latest_msg.updated_at
-			) AS latest_msg_data
-		FROM room 
-		LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
-		LEFT JOIN messages ON messages.id = room_latest_msg.message_id
-		WHERE room.clients_id = $1 
-		AND room.is_active = true 
-		AND room.is_deleted = false
-		`;
-		let params = [client_id];
+		const check = await db.query(
+			`
+		SELECT max(created_at) as last_seen
+		from activity_log
+		where user_id = $1`,
+			[user_id]
+		);
+		const { last_seen }: any = check.rows[0];
 
-		if (type) {
-			count++;
-			query += ` AND room.data->>'type' = $${count}`;
-			params.push(type);
-		}
-		if (user_id) {
-			count++;
-			query += ` AND $${count} = ANY(room.user_ids)`;
-			params.push(user_id);
-		}
-		query += `ORDER BY room_latest_msg.updated_at asc`;
-		const { rows } = await db.query(query, params);
+		let query = `
+		SELECT room.id id,
+						room.data as data,
+						room.user_ids as user_ids,
+						JSON_BUILD_OBJECT(
+							'message_id',messages.id,
+							'text',messages.text,
+							'path',messages.path,
+							'is_deleted',messages.is_deleted,
+							'last_update',room_latest_msg.updated_at
+						) AS latest_msg_data,
+						JSON_BUILD_OBJECT(
+							'unread_count',msg.unread
+						) AS activity
+					FROM room 
+					LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
+					LEFT JOIN messages ON messages.id = room_latest_msg.message_id
+					LEFT JOIN (
+						SELECT 
+						count(messages.id) as unread,
+						messages.room_id
+						from messages
+						where messages.created_at::timestamp > $4::timestamp
+						group by messages.room_id
+						)msg on msg.room_id = room.id
+					WHERE room.clients_id = $1 
+					AND room.is_active = true 
+					AND room.is_deleted = false
+					AND room.data->>'type' = $3
+					AND $2 = ANY(room.user_ids)
+					group by room.id,messages.id,room_latest_msg.updated_at,room_latest_msg.updated_at,msg.unread
+			ORDER BY room_latest_msg.updated_at
+		`;
+		let params = [client_id, user_id, type, last_seen];
+		let { rows }: any = await db.query(query, params);
+		rows = { last_seen, room_data: rows };
 		return rows;
 	} catch (e) {
 		throw new Error(e);

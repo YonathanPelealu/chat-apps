@@ -33,9 +33,8 @@ const uploadMultipleFile = multer({
 }).array("files");
 
 function fileCheck(file: any, callback: any) {
-	const mimeTypeFile = /jpg|jpeg|png|sheet|ms-excel|word|pdf/;
-	const originalFile = /jpg|jpeg|png|xlsx|xls|docx|pdf/;
-
+	const mimeTypeFile = /jpg|jpeg|png|sheet|ms-excel|word|pdf|text|csv/;
+	const originalFile = /jpg|jpeg|png|xlsx|xls|docx|pdf|csv/;
 	const mimetype = mimeTypeFile.test(file.mimetype);
 	const extName = originalFile.test(
 		path.extname(file.originalname).toLowerCase()
