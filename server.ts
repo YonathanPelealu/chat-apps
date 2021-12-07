@@ -30,6 +30,10 @@ SocketInit(_SocketServer);
 _SocketServer.on("connection", (socket) => {
 	console.log("connect from init server");
 
+	_SocketServer.of("/kriya").on("connection", () => {
+		console.log("connect from namespace");
+	});
+
 	socket.on("namespace", (namespace) => {
 		console.log("connect from emit namespace", namespace);
 
