@@ -33,7 +33,7 @@ socketServer.on("connection", (socket) => {
 	socket.on("namespace", (namespace) => {
 		console.log("connect from emit namespace", namespace);
 
-		if (namespace === "kriya") {
+		if (namespace === "/kriya") {
 			_SocketServer.of("/kriya");
 		}
 	});
