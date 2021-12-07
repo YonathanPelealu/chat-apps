@@ -47,9 +47,14 @@ const getRoomLists = async (
 	user_id: string
 ): Promise<anyObjectType> => {
 	try {
+		const check = await db.query(`
+		SELECT max(created_at) as last_seen
+		from activity_log
+		where user_id = $1`,[user_id])
+		const { last_seen }:any = check.rows[0]
+		console.log(client_id)
 		let query = `
-		SELECT * FROM (
-			SELECT DISTINCT ON (room.id) room.id id,
+		SELECT room.id id,
 						room.data as data,
 						room.user_ids as user_ids,
 						JSON_BUILD_OBJECT(
@@ -60,44 +65,37 @@ const getRoomLists = async (
 							'last_update',room_latest_msg.updated_at
 						) AS latest_msg_data,
 						JSON_BUILD_OBJECT(
-							'last_seen',activity.last_online,
-							'unread_count',activity.unread
+							'unread_count',msg.unread
 						) AS activity,
 					room_latest_msg.updated_at AS last_msg
 					FROM room 
 					LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
 					LEFT JOIN messages ON messages.id = room_latest_msg.message_id
 					LEFT JOIN (
-						SELECT
-						room.id AS id,
-						max(activity_log.created_at) as last_online,
-						count(messages.id) as unread
-						from room
-						LEFT JOIN (
-							select 
-							messages.id,
-							messages.room_id 
-							from room 
-							inner join messages on messages.room_id = room.id
-							LEFT JOIN activity_log on room.id = activity_log.room_id AND activity_log.user_id = $2
-							group by messages.id,
-							messages.room_id 
-							HAVING messages.created_at::timestamp > max(activity_log.created_at)::timestamp
-						)messages on messages.room_id = room.id
-						LEFT JOIN activity_log on room.id = activity_log.room_id AND activity_log.user_id = $2
-						group by room.id,activity_log.created_at
-						) activity on activity.id = room.id
+						SELECT 
+						count(messages.id) as unread,
+						messages.room_id
+						from messages
+						where messages.created_at::timestamp > $4::timestamp
+						group by messages.room_id
+						)msg on msg.room_id = room.id
 					WHERE room.clients_id = $1 
 					AND room.is_active = true 
 					AND room.is_deleted = false
 					AND room.data->>'type' = $3
 					AND $2 = ANY(room.user_ids)
-					group by room.id,messages.id,room_latest_msg.updated_at,activity.last_online,activity.unread,room_latest_msg.updated_at
-			) data	
-			ORDER BY data.last_msg
+					group by room.id,messages.id,room_latest_msg.updated_at,room_latest_msg.updated_at,msg.unread
+			ORDER BY last_msg
 		`;
-		let params = [client_id, user_id, type];
-		const { rows } = await db.query(query, params);
+		let params = [client_id, user_id, type,last_seen];
+		let { rows }:any = await db.query(query, params);
+		console.log(rows)
+		// rows = {
+		// 	activity:{
+		// 		unread_count: rows.activity.unread_count ? rows.activity.unread_count : 0,
+		// 		last_seen 
+		// 	}
+		// }
 		return rows;
 	} catch (e) {
 		throw new Error(e);
