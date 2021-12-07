@@ -38,7 +38,7 @@ _SocketServer.on("connection", (socket) => {
 		}
 	});
 
-	socketServer.on("namespace", (namespace) => {
+	_SocketServer.on("namespace", (namespace) => {
 		console.log("connect from emit namespace socketServer", namespace);
 
 		if (namespace === "/kriya") {
