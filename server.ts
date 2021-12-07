@@ -37,6 +37,14 @@ socketServer.on("connection", (socket) => {
 			_SocketServer.of("/kriya");
 		}
 	});
+
+	socketServer.on("namespace", (namespace) => {
+		console.log("connect from emit namespace socketServer", namespace);
+
+		if (namespace === "/kriya") {
+			_SocketServer.of("/kriya");
+		}
+	});
 });
 
 // allowing CORS
