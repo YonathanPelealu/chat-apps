@@ -7,10 +7,10 @@ import convert from "../helper/compressImage";
 
 const addMessage: initFunc = async (req, res) => {
 	const { client_id, user_id } = req.client;
+	let result = "";
 
 	try {
 		const data: messageDataType = { ...req.body };
-		let result = "";
 		const { room_id } = data;
 
 		if (req.file) {
@@ -41,13 +41,10 @@ const addMessage: initFunc = async (req, res) => {
 		});
 	}
 };
-export type getMessageDataType = {
-	room_id: string;
-	page: string;
-	client_id: string;
-	user_id: string;
-};
+
 const getMessageOnRoom: initFunc = async (req, res) => {
+	const { room_id, page } = req.query;
+
 	if (req.headers["client-id"] === "kriya") {
 		if (socketNS["kriya"].listenerCount("connection") < 1) {
 			socketNS["kriya"].on("connection", (socket) => {
@@ -71,10 +68,9 @@ const getMessageOnRoom: initFunc = async (req, res) => {
 	}
 
 	try {
-		const data: getMessageDataType = { ...req.query, ...req.client };
-		const result = await messageModel.getMessageOnRoom(data);
+		const result = await messageModel.getMessageOnRoom(room_id, page);
 		res.json(result);
-	} catch (e: any) {
+	} catch (e) {
 		res.json({
 			status: constant.RESPONSE_STATUS_FAILED,
 			message: e.toString(),
