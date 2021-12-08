@@ -27,6 +27,14 @@ const _SocketServer = new Server(socketServer, {
 
 SocketInit(_SocketServer);
 
+_SocketServer.of("/kriya").on("connection", () => {
+	console.log("connect from namespace");
+});
+
+_SocketServer.of("/kriya").on("connection", () => {
+	console.log("connect from namespace");
+});
+
 _SocketServer.on("connection", (socket) => {
 	console.log("connect from init server");
 
