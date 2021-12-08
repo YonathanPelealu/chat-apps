@@ -47,51 +47,49 @@ const getRoomLists = async (
 	user_id: string
 ): Promise<anyObjectType> => {
 	try {
-		const check = await db.query(
-			`
-		SELECT max(created_at) as last_seen
-		from activity_log
-		where user_id = $1`,
-			[user_id]
-		);
-		const { last_seen }: any = check.rows[0];
-
 		let query = `
-		SELECT room.id id,
-						room.data as data,
-						room.user_ids as user_ids,
-						JSON_BUILD_OBJECT(
-							'message_id',messages.id,
-							'text',messages.text,
-							'path',messages.path,
-							'is_deleted',messages.is_deleted,
-							'last_update',room_latest_msg.updated_at
-						) AS latest_msg_data,
-						JSON_BUILD_OBJECT(
-							'unread_count',msg.unread
-						) AS activity
-					FROM room 
-					LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
-					LEFT JOIN messages ON messages.id = room_latest_msg.message_id
-					LEFT JOIN (
-						SELECT 
-						count(messages.id) as unread,
-						messages.room_id
-						from messages
-						where messages.created_at::timestamp > $4::timestamp
-						group by messages.room_id
-						)msg on msg.room_id = room.id
-					WHERE room.clients_id = $1 
-					AND room.is_active = true 
-					AND room.is_deleted = false
-					AND room.data->>'type' = $3
-					AND $2 = ANY(room.user_ids)
-					group by room.id,messages.id,room_latest_msg.updated_at,room_latest_msg.updated_at,msg.unread
-			ORDER BY room_latest_msg.updated_at
+		SELECT
+		room.id as id,
+		room.data as data,
+		room.user_ids as user_ids,
+		JSON_BUILD_OBJECT(
+			'message_id',messages.id,
+			'text',messages.text,
+			'path',messages.path,
+			'is_deleted',messages.is_deleted,
+			'last_update',room_latest_msg.updated_at,
+			'unread',activity.unread
+		) AS latest_msg_data
+	FROM room 
+	LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
+	LEFT JOIN messages ON messages.id = room_latest_msg.message_id
+	LEFT JOIN (
+		select 
+		distinct on (r.id) r.id as room_id,
+		count(m.id) as unread,
+		activity_log.created_at as last_on_room
+		from room r 
+		inner join (
+			select
+			activity_log.room_id as room_id,
+			max(activity_log.created_at) as created_at 
+			from activity_log
+			inner join room ON activity_log.room_id = room.id	
+			where activity_log.user_id = $2
+			group by activity_log.room_id
+			) activity_log ON activity_log.room_id = r.id -- get user's last activity ON room, select by distinct to get the latest activity
+		left join messages m ON m.room_id = r.id and m.created_at > activity_log.created_at -- get messages ON room that created after last user activity and count as unread messages
+		group by r.id,last_on_room
+	) activity ON activity.room_id = room.id
+	WHERE room.clients_id = $1 
+	AND room.is_active = true 
+	AND room.is_deleted = false
+	AND room.data->>'type' = $3
+	AND $2 = ANY (room.user_ids)
+	ORDER BY room_latest_msg.updated_at desc
 		`;
-		let params = [client_id, user_id, type, last_seen];
+		let params = [client_id, user_id, type];
 		let { rows }: any = await db.query(query, params);
-		rows = { last_seen, room_data: rows };
 		return rows;
 	} catch (e) {
 		throw new Error(e);
