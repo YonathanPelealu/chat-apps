@@ -4,7 +4,7 @@ import {
 	snackbarType,
 } from "../interfaces/general_interface";
 import db from "../connections/db/postgre";
-
+import format from "pg-format";
 const addMessage = async (data: messageDataType): Promise<anyObjectType> => {
 	try {
 		const { room_id, sent_by, path, text, is_deleted } = data;
