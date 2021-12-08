@@ -7,7 +7,11 @@ export const socketMiddleware: (
 	next: () => void
 ) => Promise<void> = async (req, res, next) => {
 	try {
+		console.log("middleware kepanggil");
+
 		if (req.headers["client-id"] === "kriya") {
+			console.log("client-id", req.headers["client-id"]);
+
 			if (socketNS["kriya"].listenerCount("connection") < 1) {
 				socketNS["kriya"].on("connection", (socket) => {
 					console.log("connect from middleware");
