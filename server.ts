@@ -31,9 +31,9 @@ socketServer.on("connection", () => {
 	console.log("connect nih");
 });
 
-_SocketServer.of("/kriya").on("connection", () => {
-	console.log("connect from namespace");
-});
+// _SocketServer.of("/kriya").on("connection", () => {
+// 	console.log("connect from namespace");
+// });
 
 // if (req.headers["client-id"] === "kriya") {
 // 	if (socketNS["kriya"].listenerCount("connection") < 1) {
