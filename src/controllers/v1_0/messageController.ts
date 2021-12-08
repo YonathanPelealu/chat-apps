@@ -48,27 +48,29 @@ export type getMessageDataType = {
 	user_id: string;
 };
 const getMessageOnRoom: initFunc = async (req, res) => {
-	if (req.headers["client-id"] === "kriya") {
-		if (socketNS["kriya"].listenerCount("connection") < 1) {
-			socketNS["kriya"].on("connection", (socket) => {
-				socket.on("join", (room_id) => {
-					socket.join(room_id);
-					console.log(
-						`client socket_id: ${socket.id} joining room: ${room_id}`
-					);
-				});
-				socket.on("leave", (room_id) => {
-					socket.leave(room_id);
-					console.log(
-						`client socket_id: ${socket.id} leaving room: ${room_id}`
-					);
-				});
-				socket.on("disconnect", () => {
-					console.log("client disconected", socket.id);
-				});
-			});
-		}
-	}
+	const { room_id, page } = req.query;
+
+	// if (req.headers["client-id"] === "kriya") {
+	// 	if (socketNS["kriya"].listenerCount("connection") < 1) {
+	// 		socketNS["kriya"].on("connection", (socket) => {
+	// 			socket.on("join", (room_id) => {
+	// 				socket.join(room_id);
+	// 				console.log(
+	// 					`client socket_id: ${socket.id} joining room: ${room_id}`
+	// 				);
+	// 			});
+	// 			socket.on("leave", (room_id) => {
+	// 				socket.leave(room_id);
+	// 				console.log(
+	// 					`client socket_id: ${socket.id} leaving room: ${room_id}`
+	// 				);
+	// 			});
+	// 			socket.on("disconnect", () => {
+	// 				console.log("client disconected", socket.id);
+	// 			});
+	// 		});
+	// 	}
+	// }
 
 	try {
 		const data: getMessageDataType = { ...req.query, ...req.client };

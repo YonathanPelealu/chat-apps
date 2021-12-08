@@ -61,7 +61,7 @@ const getRoomLists = async (
 			'unread',activity.unread
 		) AS latest_msg_data
 	FROM room 
-	LEFT JOIN room_latest_msg ON room_latest_msg.room_id = room.id
+	LEFT JOIN room_latest_msg ON room.id = room_latest_msg.room_id
 	LEFT JOIN messages ON messages.id = room_latest_msg.message_id
 	LEFT JOIN (
 		select 
@@ -86,7 +86,7 @@ const getRoomLists = async (
 	AND room.is_deleted = false
 	AND room.data->>'type' = $3
 	AND $2 = ANY (room.user_ids)
-	ORDER BY room_latest_msg.updated_at desc
+	ORDER BY room_latest_msg.updated_at
 		`;
 		let params = [client_id, user_id, type];
 		let { rows }: any = await db.query(query, params);

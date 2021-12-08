@@ -8,7 +8,7 @@ import dotEnv from "./config";
 import authMiddleware from "./src/middleware/authMiddleware";
 import appsVersionController from "./src/controllers/appsVersionController";
 
-import { SocketInit } from "./src/connections/socket";
+import { SocketInit, socketNS } from "./src/connections/socket";
 import { migrateServices } from "./src/migrator";
 import clientController from "./src/controllers/v1_0/clientController";
 
@@ -31,37 +31,55 @@ socketServer.on("connection", () => {
 	console.log("connect nih");
 });
 
-_SocketServer.of("/kriya").on("connection", () => {
-	console.log("connect from namespace");
-});
+// _SocketServer.of("/kriya").on("connection", () => {
+// 	console.log("connect from namespace");
+// });
 
-_SocketServer.of("/kriya").on("connection", () => {
-	console.log("connect from namespace");
-});
+// if (req.headers["client-id"] === "kriya") {
+// 	if (socketNS["kriya"].listenerCount("connection") < 1) {
+// 		socketNS["kriya"].on("connection", (socket) => {
+// 			socket.on("join", (room_id) => {
+// 				socket.join(room_id);
+// 				console.log(
+// 					`client socket_id: ${socket.id} joining room: ${room_id}`
+// 				);
+// 			});
+// 			socket.on("leave", (room_id) => {
+// 				socket.leave(room_id);
+// 				console.log(
+// 					`client socket_id: ${socket.id} leaving room: ${room_id}`
+// 				);
+// 			});
+// 			socket.on("disconnect", () => {
+// 				console.log("client disconected", socket.id);
+// 			});
+// 		});
+// 	}
+// }
 
-_SocketServer.on("connection", (socket) => {
-	console.log("connect from init server");
+// _SocketServer.on("connection", (socket) => {
+// 	console.log("connect from init server");
 
-	_SocketServer.of("/kriya").on("connection", () => {
-		console.log("connect from namespace");
-	});
+// 	_SocketServer.of("/kriya").on("connection", () => {
+// 		console.log("connect from namespace");
+// 	});
 
-	socket.on("namespace", (namespace) => {
-		console.log("connect from emit namespace", namespace);
+// 	socket.on("namespace", (namespace) => {
+// 		console.log("connect from emit namespace", namespace);
 
-		if (namespace === "/kriya") {
-			_SocketServer.of("/kriya");
-		}
-	});
+// 		if (namespace === "/kriya") {
+// 			_SocketServer.of("/kriya");
+// 		}
+// 	});
 
-	_SocketServer.on("namespace", (namespace) => {
-		console.log("connect from emit namespace socketServer", namespace);
+// 	_SocketServer.on("namespace", (namespace) => {
+// 		console.log("connect from emit namespace socketServer", namespace);
 
-		if (namespace === "/kriya") {
-			_SocketServer.of("/kriya");
-		}
-	});
-});
+// 		if (namespace === "/kriya") {
+// 			_SocketServer.of("/kriya");
+// 		}
+// 	});
+// });
 
 // allowing CORS
 app.use(cors());
