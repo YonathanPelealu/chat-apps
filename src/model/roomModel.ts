@@ -59,6 +59,11 @@ const createRoom = async (
 			sent_by: "system",
 			is_deleted: false,
 		};
+		/* 
+		datainit means to send empty message when creating new room 
+		to prevent null value on room_latest message property when get room list by type
+		if the null value exists, it will always placed on the top of the room lists
+		*/
 		await messageModel.addMessage(client_id, dataInit);
 		return { id, message };
 	} catch (e) {
