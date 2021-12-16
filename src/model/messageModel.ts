@@ -13,11 +13,13 @@ const addMessage = async (
 ): Promise<any> => {
 	try {
 		const msg = await messageServices.addMessage(data);
-		await activityLogService.addActivityLog(
-			client_id,
-			data.sent_by,
-			data.room_id
-		);
+		if (data.sent_by !== "system") {
+			await activityLogService.addActivityLog(
+				client_id,
+				data.sent_by,
+				data.room_id
+			);
+		}
 		const last_msg = await roomLatestMsgService.checkExistingRoom(data.room_id);
 		const response =
 			last_msg.length > 0

@@ -2,8 +2,10 @@ import {
 	actionType,
 	anyObjectType,
 	roomDataType,
+	messageDataType,
 } from "../interfaces/general_interface";
 import roomService from "../services/roomService";
+import messageModel from "./messageModel";
 
 const updateUserInRoom = async (
 	room_id: string,
@@ -49,7 +51,16 @@ const createRoom = async (
 	data: roomDataType
 ): Promise<anyObjectType> => {
 	try {
-		return await roomService.createRoom(client_id, data);
+		const { id, message } = await roomService.createRoom(client_id, data);
+		const dataInit: messageDataType = {
+			room_id: id,
+			path: "",
+			text: "",
+			sent_by: "system",
+			is_deleted: false,
+		};
+		await messageModel.addMessage(client_id, dataInit);
+		return { id, message };
 	} catch (e) {
 		throw new Error(e);
 	}
