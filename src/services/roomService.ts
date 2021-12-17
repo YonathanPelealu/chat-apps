@@ -113,13 +113,14 @@ const createRoom = async (
 	data: roomDataType
 ): Promise<anyObjectType> => {
 	try {
-		const query = `INSERT INTO room (clients_id,data, is_deleted, user_ids) VALUES ($1,$2,$3,$4) RETURNING id`;
+		const query = `INSERT INTO room (clients_id,data, is_deleted, user_ids, custom_id) VALUES ($1,$2,$3,$4,$5) RETURNING id`;
 		let message: string = "";
 		const params = [
 			client_id,
 			{ type: data.type, name: data.name },
 			false,
 			data.user_ids,
+			data.custom_id ? data.custom_id : null,
 		];
 		const result: any = await db.query(query, params);
 		result
