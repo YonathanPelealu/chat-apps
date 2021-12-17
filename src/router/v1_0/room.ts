@@ -12,5 +12,5 @@ room.post(roomPath.createRoom, roomController.createRoom);
 room.get(roomPath.getRoomLists, roomController.getRoomLists);
 room.get(roomPath.getRoomById, roomController.getRoomById);
 room.get(roomPath.getTypeLists, roomController.getRoomTypeLists);
-
+room.put(roomPath.deleteRoom, roomController.deleteRoom);
 export default room;

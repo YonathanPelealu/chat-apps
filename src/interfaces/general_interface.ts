@@ -22,10 +22,17 @@ export type roomDataType = {
 	user_ids: string[];
 	type: string;
 	name: string;
+	custom_id?: string;
 };
 export type latestMsgDataType = {
 	room_id: string;
 	user_id: string;
 	message_id: string;
+};
+
+export type deleteGroupDataType = {
+	clients_id: string;
+	room_id?: string;
+	custom_id?: string;
 };
 export type actionType = "join" | "leave";
