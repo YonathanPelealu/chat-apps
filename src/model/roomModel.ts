@@ -3,6 +3,7 @@ import {
 	anyObjectType,
 	roomDataType,
 	messageDataType,
+	deleteGroupDataType,
 } from "../interfaces/general_interface";
 import roomService from "../services/roomService";
 import messageModel from "./messageModel";
@@ -77,10 +78,17 @@ const getRoomTypeLists = async (clients_id: string): Promise<anyObjectType> => {
 		throw new Error(e);
 	}
 };
+
+const deleteRoom = async (data: deleteGroupDataType): Promise<any> => {
+	try {
+		return await roomService.deleteRoom(data);
+	} catch (e) {}
+};
 export default {
 	updateUserInRoom,
 	getRoomLists,
 	getRoomById,
 	createRoom,
 	getRoomTypeLists,
+	deleteRoom,
 };

@@ -1,6 +1,7 @@
 import db from "../connections/db/postgre";
 import {
 	anyObjectType,
+	deleteGroupDataType,
 	roomDataType,
 	snackbarType,
 } from "../interfaces/general_interface";
@@ -141,6 +142,39 @@ const getRoomTypeLists = async (clients_id: string): Promise<anyObjectType> => {
 		throw new Error(e);
 	}
 };
+const deleteRoom = async (data: deleteGroupDataType): Promise<any> => {
+	try {
+		const params = [data.clients_id];
+		let filterQuery = "";
+		let message = "";
+		/**
+		 *
+		 * room_id or custom_id need to be specified
+		 * if none of these specified it will return an failed message
+		 * when both of room_id and custom id has values it will prioritize using room_id as selector
+		 *
+		 */
+		data.room_id
+			? ((filterQuery += ` AND room.id = $2 `), params.push(data.room_id))
+			: data.custom_id
+			? ((filterQuery += ` AND room.custom_id = $2 `),
+			  params.push(data.custom_id))
+			: "";
+
+		const query = `
+		UPDATE room 
+		SET is_active = false 
+		WHERE clients_id = $1
+		${filterQuery}`;
+
+		const result: any = await db.query(query, params);
+		result.rowCount > 0
+			? (message += "room deleted")
+			: (message += "failed delete room");
+		console.log(message);
+		return { message };
+	} catch (e) {}
+};
 export default {
 	updateUserInRoom,
 	getCurrentUserInRoom,
@@ -148,4 +182,5 @@ export default {
 	getRoomById,
 	createRoom,
 	getRoomTypeLists,
+	deleteRoom,
 };

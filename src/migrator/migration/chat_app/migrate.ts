@@ -65,14 +65,17 @@ const room = createQuery({
 		"data JSONB",
 		"user_ids text[]",
 		"is_deleted BOOLEAN DEFAULT false",
+		"custom_id TEXT",
 	],
 	references: ["clients_id UUID REFERENCES clients"],
 });
 const activity_log = createQuery({
-    table_name:"activity_log",
-    columns: ["user_id TEXT"],
-    references:["clients_id UUID REFERENCES clients, room_id UUID REFERENCES room"]
-})
+	table_name: "activity_log",
+	columns: ["user_id TEXT"],
+	references: [
+		"clients_id UUID REFERENCES clients, room_id UUID REFERENCES room",
+	],
+});
 const messages = createQuery({
 	table_name: "messages",
 	columns: ["path TEXT", "text TEXT", "sent_by TEXT", "is_deleted BOOLEAN"],
