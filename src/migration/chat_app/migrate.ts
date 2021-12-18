@@ -1,5 +1,5 @@
 import { chatTableType } from "../../interfaces/table_interface";
-import db from "../../connection/db/postgre";
+import db from "../../connections/db/postgre";
 import { errorHandler } from "../../handler/errorHandler";
 
 const createQuery = ({
