@@ -1,6 +1,6 @@
-import clientModel from "../../model/clientModel";
+import clientModel from "../../../model/clientModel";
 import { initFunc } from "./interface";
-import constant from "../../constants/general";
+import constant from "../../../constants/general";
 
 const registerClient: initFunc = async (req, res) => {
 	const { name, chat_type, description } = req.body;
