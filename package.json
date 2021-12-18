@@ -21,6 +21,7 @@
   "dependencies": {
     "ajv": "^8.8.2",
     "axios": "^0.24.0",
+    "basic-authorization-header": "^0.2.7",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",

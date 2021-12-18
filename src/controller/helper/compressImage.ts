@@ -1,5 +1,5 @@
 import fs from "fs";
-import { compresFunc } from "../v1_0/interface";
+import { compresFunc } from "../../interfaces/general_interface";
 const webp = require("webp-converter");
 webp.grant_permission();
 const convertToWebp: compresFunc = (inputImage, outputImage) => {
