@@ -1,9 +1,9 @@
-import { messageDataType } from "../../interfaces/general_interface";
-import messageModel from "../../model/messageModel";
+import { messageDataType } from "../../../interfaces/general_interface";
+import messageModel from "../../../model/messageModel";
 import { initFunc } from "./interface";
-import constant from "../../constants/general";
-import { socketNS } from "../../connections/socket";
-import convert from "../helper/compressImage";
+import constant from "../../../constants/general";
+import { socketNS } from "../../../connections/socket";
+import convert from "../../helper/compressImage";
 
 const addMessage: initFunc = async (req, res) => {
 	const { client_id, user_id } = req.client;

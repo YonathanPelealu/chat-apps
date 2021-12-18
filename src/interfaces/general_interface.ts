@@ -26,3 +26,5 @@ export type roomDataType = {
 export type actionType = 
     |"join"
     |"leave";
+
+export type compresFunc = (input: string, output: string) => string;
