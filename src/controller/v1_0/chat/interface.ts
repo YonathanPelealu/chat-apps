@@ -1,4 +1,4 @@
-import { anyObjectType } from "./../../interfaces/general_interface";
+import { anyObjectType } from "../../../interfaces/general_interface";
 
 export type initFunc = (
 	req: anyObjectType,
@@ -6,3 +6,7 @@ export type initFunc = (
 ) => Promise<void | anyObjectType>;
 
 export type compresFunc = (input: string, output: string) => string;
+export type userCredentialDataType = {
+	token:string,
+	key:string
+};
