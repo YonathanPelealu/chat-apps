@@ -1,8 +1,8 @@
 import { initFunc } from "./interface";
-import constant from "../../constants/general";
-import roomModel from "../../model/roomModel";
-import roomService from "../../services/roomService";
-import { roomDataType } from "../../interfaces/general_interface";
+import constant from "../../../constants/general";
+import roomModel from "../../../model/roomModel";
+import roomService from "../../../services/roomService";
+import { roomDataType } from "../../../interfaces/general_interface";
 
 const updateUserInRoom: initFunc = async (req, res) => {
 	const { room_id, action, user_id } = req.query;

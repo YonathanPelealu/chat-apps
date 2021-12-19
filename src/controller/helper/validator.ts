@@ -4,7 +4,7 @@ const ajv = new Ajv();
 export const schemaRegister = {
 	type: "object",
 	properties: {
-		username:{
+		username:{ 
 			type: "string"
 		},
 		password:{
@@ -19,7 +19,7 @@ export const schemaRegister = {
 		telephone:{
 			type: "string"
 		},
-		profile_image:{
+		path:{
 			type: "string"
 		},
 		address:{
@@ -35,13 +35,15 @@ export const schemaRegister = {
 			type: "string"
 		}
 	},
-	required: ["username","password","first_name","telephone","profile_image","address","city","province","country"],
+	required: ["username","password","first_name","telephone","address","city","province","country"],
 	additionalProperties: false,
 };
 
 
 export const validate = async (schema: any, data: any): Promise<boolean> => {
+	console.log('validator')
 	const validation = ajv.compile(schema);
+	console.log(validation(data))
 	if (validation(data)) {
 		return true;
 	} else {

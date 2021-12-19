@@ -1,6 +1,6 @@
 import { initFunc } from "./interface";
-import constant from "../../constants/general";
-import roomLatestMessageModel from "../../model/roomLatestMessageModel";
+import constant from "../../../constants/general";
+import roomLatestMessageModel from "../../../model/roomLatestMessageModel";
 
 const getLatestMessageForRoom:initFunc = async (req,res) => {
     const {room_id} = req.query;
