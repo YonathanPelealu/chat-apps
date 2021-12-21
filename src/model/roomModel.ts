@@ -5,6 +5,7 @@ import {
 	messageDataType,
 	deleteGroupDataType,
 } from "../interfaces/general_interface";
+import activityLogService from "../services/activityLogService";
 import roomService from "../services/roomService";
 import messageModel from "./messageModel";
 
@@ -66,6 +67,14 @@ const createRoom = async (
 		if the null value exists, it will always placed on the top of the room lists
 		*/
 		await messageModel.addMessage(client_id, dataInit);
+
+		/**
+		 * add activity_log of all assigned user(s) into newly created room
+		 */
+		await Promise.all([
+			data.user_ids.forEach((user:any)=> {
+			activityLogService.addActivityLog(client_id,user,id)
+		})])
 		return { id, message };
 	} catch (e) {
 		throw new Error(e);
