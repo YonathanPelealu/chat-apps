@@ -35,18 +35,38 @@ const getRoomLists = async (
 ): Promise<anyObjectType> => {
 	try {
 		const result = await roomService.getRoomLists(client_id, type, user_id);
-		const newRes = result.sort((a:any,b:any) =>  {
-			console.log("update", a?.latest_msg_data?.last_update)
-			console.log("created", a?.created_at)
+		// const tempData = result
+		
+		// const newRes = result.sort((a:any,b:any) =>  {
+		// 	console.log("update", a?.latest_msg_data?.last_update)
+		// 	console.log("created", a?.created_at)
 			
-			return (b?.latest_msg_data?.last_update ? b.latest_msg_data.last_update : b.created_at) -
-			(a?.latest_msg_data?.last_update ? a.latest_msg_data.last_update : a.created_at)  
+			// return (b?.latest_msg_data?.last_update ? b.latest_msg_data.last_update : b.created_at) -
+			// (a?.latest_msg_data?.last_update ? a.latest_msg_data.last_update : a.created_at)  
 			// a.latest_msg_data.last_update != null ? a.latest_msg_data.last_update - 
 			// b.latest_msg_data.last_update : a.created_at - b.latest_msg_data.last_update 
-		}
-		)
-		console.log(result)
-		return newRes
+		// }
+		// )
+		// console.log(result)
+		// return newRes
+		const tempData = result.map((data:any) => {
+			if (!data.latest_msg_data.last_update) {
+				data.latest_msg_data.last_update = data.created_at
+			} else {
+				data.latest_msg_data.last_update
+			}
+			delete data.created_at;
+			return data
+		});
+		// console.log(tempData)
+		const sortedData = tempData.sort((a:any,b:any) => {
+			const c = new Date(a.latest_msg_data.last_update);
+			const d = new Date(b.latest_msg_data.last_update);
+			return d > c ? 1 : -1 ;
+			// return b.latest_msg_data.last_update > a.latest_msg_data.last_update ? 1 : -1;
+		})
+
+		return sortedData;
 	} catch (e) {
 		throw new Error(e);
 	}
