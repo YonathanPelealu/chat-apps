@@ -60,8 +60,8 @@ const getRoomLists = async (
 		});
 		// console.log(tempData)
 		const sortedData = tempData.sort((a:any,b:any) => {
-			const c = new Date(a.latest_msg_data.last_update);
-			const d = new Date(b.latest_msg_data.last_update);
+			const c = new Date(a.latest_msg_data.last_update).getTime();
+			const d = new Date(b.latest_msg_data.last_update).getTime();
 			return d > c ? 1 : -1 ;
 			// return b.latest_msg_data.last_update > a.latest_msg_data.last_update ? 1 : -1;
 		})
