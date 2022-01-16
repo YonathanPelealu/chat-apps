@@ -1,0 +1,962 @@
+{
+	"info": {
+		"_postman_id": "8a8bd7ce-7f32-45a6-af48-f7ea5f3629aa",
+		"name": "CHAT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CLIENT",
+			"item": [
+				{
+					"name": "Register Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"example\",\n    \"chat_type\" : [\"group\",\"normal\"],\n    \"description\": \"no description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9009/register",
+							"host": [
+								"localhost"
+							],
+							"port": "9009",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Register Client",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"example\",\n    \"chat_type\" : [\"group\",\"normal\"],\n    \"description\": \"no description\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:9009/register",
+									"host": [
+										"localhost"
+									],
+									"port": "9009",
+									"path": [
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-S4D9IDnYESWEbZXCxeOkgQ9WYeQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:49:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Success\",\n    \"message\": \"success add new client\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "Create Room",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_ids\" : [\"user1\",\"user2\"],\n    \"type\":\"group\",\n    \"name\":\"room 13\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/room/create",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"room",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Room",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_ids\" : [\"user1\",\"user2\"],\n    \"type\":\"group\",\n    \"name\":\"room 13\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dev_base_url}}/room/create",
+									"host": [
+										"{{dev_base_url}}"
+									],
+									"path": [
+										"room",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"61-jpJHx0EFGlR9c7v+UIFh3pqblcs\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:36:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Success\",\n    \"message\": \"success add new room\",\n    \"id\": \"e273bd51-ea6f-4873-a851-9a10afa24d34\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get room type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}room/type-lists",
+							"host": [
+								"{{dev_base_url}}room"
+							],
+							"path": [
+								"type-lists"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get room type",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{dev_base_url}}room/type-lists",
+									"host": [
+										"{{dev_base_url}}room"
+									],
+									"path": [
+										"type-lists"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-dfUBdnUvWmnxikkt4d460CqMItY\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:33:08 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    \"normal\",\n    \"group\",\n    \"classroom\"\n]"
+						}
+					]
+				},
+				{
+					"name": "get room list by type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/room/lists?type=normal",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"room",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "normal"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get room list by type",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{dev_base_url}}/room/lists?type=normal",
+									"host": [
+										"{{dev_base_url}}"
+									],
+									"path": [
+										"room",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "normal"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4025"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"fb9-6Wk8NNqoqUZLajPEXu2jOJvptaY\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:34:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"926e2cc1-ab8f-4942-8583-55929d823d0c\",\n        \"data\": {\n            \"name\": \"room 69 part 2\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"c499721c-037f-45a2-ba76-dd1ebf632bb4\",\n            \"text\": \"tes unread to user 1 from user 2 pt 3\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-21T23:09:57.812015+07:00\",\n            \"unread\": 0\n        }\n    },\n    {\n        \"id\": \"87699a1a-f7e6-4460-bec8-39e07d196cdd\",\n        \"data\": {\n            \"name\": \"room 69\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"10bfaf5c-24e9-4941-9683-587372f8d1c8\",\n            \"text\": \"tes unread to user 1 from user 2 pt 2\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-21T22:52:33.379301+07:00\",\n            \"unread\": 0\n        }\n    },\n    {\n        \"id\": \"4565a42e-922a-4b08-b2f4-f5f16b9dae99\",\n        \"data\": {\n            \"name\": \"room 69\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": null,\n            \"text\": null,\n            \"path\": null,\n            \"is_deleted\": null,\n            \"last_update\": \"2021-12-21T15:32:20.544Z\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"b9afdddf-f822-4ad9-a1b2-5eb791fa89f6\",\n        \"data\": {\n            \"name\": \"room 18\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"b8b633a2-f90a-4360-ab77-ca1c908cee00\",\n            \"text\": \"test unread new room 3\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-20T16:38:40.559785+07:00\",\n            \"unread\": 0\n        }\n    },\n    {\n        \"id\": \"66ede435-e7fc-46e7-b107-711c4dc85456\",\n        \"data\": {\n            \"name\": \"room 17\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"f126dc45-f7c3-4eb5-a778-9e221a399c21\",\n            \"text\": \"\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-20T16:18:33.440788+07:00\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"214f5c4a-1e9e-4caa-a646-c5866ee420e5\",\n        \"data\": {\n            \"name\": \"room 16\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"debce600-224c-4108-91f4-0a4eab8ddcba\",\n            \"text\": \"\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-20T16:07:20.893685+07:00\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"c32dd863-9e1f-43ca-b63b-7ea04ea7aa75\",\n        \"data\": {\n            \"name\": \"room 3\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"7c3a9941-3da7-4289-8d76-f9b040aac7cf\",\n            \"text\": \"test unread new room 2\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-20T15:59:59.560082+07:00\",\n            \"unread\": 0\n        }\n    },\n    {\n        \"id\": \"169f1ecc-9a49-49b6-b37d-06e5bb9aec80\",\n        \"data\": {\n            \"name\": \"room 16\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"c5c46185-bf41-4e02-91b3-27e4cf4a57f1\",\n            \"text\": \"test unread new room 2\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-20T15:59:31.783629+07:00\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"75bde049-d91f-4fa8-92b2-56333338c7aa\",\n        \"data\": {\n            \"name\": \"room 12\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": null,\n            \"text\": null,\n            \"path\": null,\n            \"is_deleted\": null,\n            \"last_update\": \"2021-12-16T11:26:42.509Z\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"3589f30f-e1cf-41e5-85dd-f7b65c18929c\",\n        \"data\": {\n            \"name\": \"room 10\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"c7732896-59b4-4dd9-b6b2-8be200f71c85\",\n            \"text\": \"\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-16T15:58:43.177424+07:00\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"07f5f408-79f0-4e97-9aef-fa9020e2d87f\",\n        \"data\": {\n            \"name\": \"room 9\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": null,\n            \"text\": null,\n            \"path\": null,\n            \"is_deleted\": null,\n            \"last_update\": \"2021-12-16T08:27:13.313Z\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"73d230a4-bbb4-44e1-82e2-73e8a79224be\",\n        \"data\": {\n            \"name\": \"room 8\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": null,\n            \"text\": null,\n            \"path\": null,\n            \"is_deleted\": null,\n            \"last_update\": \"2021-12-16T08:16:08.131Z\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"2a58db49-587c-4e1a-92de-ba6514241b00\",\n        \"data\": {\n            \"name\": \"room 7\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": null,\n            \"text\": null,\n            \"path\": null,\n            \"is_deleted\": null,\n            \"last_update\": \"2021-12-16T08:16:02.963Z\",\n            \"unread\": null\n        }\n    },\n    {\n        \"id\": \"b16042ae-d744-4a1f-abd4-d541c65e768b\",\n        \"data\": {\n            \"name\": \"room 4\",\n            \"type\": \"normal\"\n        },\n        \"user_ids\": [\n            \"user1\",\n            \"user2\"\n        ],\n        \"latest_msg_data\": {\n            \"message_id\": \"5da37c1a-ccc9-4659-96d6-5987e47e032f\",\n            \"text\": \"csv attachment 111\",\n            \"path\": \"\",\n            \"is_deleted\": false,\n            \"last_update\": \"2021-12-08T16:52:24.087286+07:00\",\n            \"unread\": 3\n        }\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "MESSAGE",
+			"item": [
+				{
+					"name": "Send Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "room_id",
+									"value": "d21865d2-38b0-4179-ac7f-4470b343903a",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "text",
+									"value": "tanpa gambar",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/chat/send",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"chat",
+								"send"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Send Message",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "room_id",
+											"value": "d21865d2-38b0-4179-ac7f-4470b343903a",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "text",
+											"value": "tanpa gambar",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{dev_base_url}}/chat/send",
+									"host": [
+										"{{dev_base_url}}"
+									],
+									"path": [
+										"chat",
+										"send"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "20"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"14-Aecwmfr5xTp+PReMihhLNM3Z9mY\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:40:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Success\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get messages on room",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/chat/lists?room_id=d21865d2-38b0-4179-ac7f-4470b343903a&page=0",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"chat",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "d21865d2-38b0-4179-ac7f-4470b343903a"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get messages on room",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{dev_base_url}}/chat/lists?room_id=d21865d2-38b0-4179-ac7f-4470b343903a&page=0",
+									"host": [
+										"{{dev_base_url}}"
+									],
+									"path": [
+										"chat",
+										"lists"
+									],
+									"query": [
+										{
+											"key": "room_id",
+											"value": "d21865d2-38b0-4179-ac7f-4470b343903a"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "262"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"106-/4r957nq8ClEPPN3FWM+YUChU/k\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:44:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"151c970a-f6c0-4f28-9236-bbd7cfbc34e3\",\n        \"is_active\": true,\n        \"room_id\": \"d21865d2-38b0-4179-ac7f-4470b343903a\",\n        \"path\": \"\",\n        \"text\": \"tanpa gambar\",\n        \"sent_by\": \"user1\",\n        \"is_deleted\": false,\n        \"created_at\": \"2022-01-13T07:40:29.785Z\",\n        \"updated_at\": \"2022-01-13T07:40:29.785Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "last message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client-id",
+								"value": "kriya",
+								"type": "text"
+							},
+							{
+								"key": "client-key",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "client-secret",
+								"value": "123456789012",
+								"type": "text"
+							},
+							{
+								"key": "user-id",
+								"value": "user1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/last-message?room_id=d21865d2-38b0-4179-ac7f-4470b343903a",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"last-message"
+							],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "d21865d2-38b0-4179-ac7f-4470b343903a"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "last message",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "client-id",
+										"value": "kriya",
+										"type": "text"
+									},
+									{
+										"key": "client-key",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "client-secret",
+										"value": "123456789012",
+										"type": "text"
+									},
+									{
+										"key": "user-id",
+										"value": "user1",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{dev_base_url}}/last-message?room_id=d21865d2-38b0-4179-ac7f-4470b343903a",
+									"host": [
+										"{{dev_base_url}}"
+									],
+									"path": [
+										"last-message"
+									],
+									"query": [
+										{
+											"key": "room_id",
+											"value": "d21865d2-38b0-4179-ac7f-4470b343903a"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "126"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"7e-lmCY0CFn6VgtYFbIqg1RQv21XOQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Jan 2022 07:48:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"151c970a-f6c0-4f28-9236-bbd7cfbc34e3\",\n        \"text\": \"tanpa gambar\",\n        \"path\": \"\",\n        \"sent_by\": \"user1\",\n        \"room_name\": \"room 13 normal\"\n    }\n]"
+						}
+					]
+				}
+			]
+		}
+	]
+}

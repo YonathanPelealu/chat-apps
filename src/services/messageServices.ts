@@ -4,7 +4,6 @@ import {
 	snackbarType,
 } from "../interfaces/general_interface";
 import db from "../connections/db/postgre";
-import format from "pg-format";
 const addMessage = async (data: messageDataType): Promise<anyObjectType> => {
 	try {
 		const { room_id, sent_by, path, text, is_deleted } = data;
@@ -26,6 +25,7 @@ const getMessageOnRoom = async (
 		SELECT * 
 		FROM messages 
 		WHERE messages.room_id = $1 
+		AND messages.sent_by != 'system'
 		AND messages.is_active = true 
 		LIMIT 20 OFFSET $2
 		`;

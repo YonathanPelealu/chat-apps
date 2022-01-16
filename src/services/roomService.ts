@@ -1,6 +1,7 @@
 import db from "../connections/db/postgre";
 import {
 	anyObjectType,
+	deleteGroupDataType,
 	roomDataType,
 	snackbarType,
 } from "../interfaces/general_interface";
@@ -59,9 +60,10 @@ const getRoomLists = async (
 			'is_deleted',messages.is_deleted,
 			'last_update',room_latest_msg.updated_at,
 			'unread',activity.unread
-		) AS latest_msg_data
+		) AS latest_msg_data,
+		room.created_at
 	FROM room 
-	LEFT JOIN room_latest_msg ON room.id = room_latest_msg.room_id
+	left JOIN room_latest_msg ON room.id = room_latest_msg.room_id
 	LEFT JOIN messages ON messages.id = room_latest_msg.message_id
 	LEFT JOIN (
 		select 
@@ -86,7 +88,7 @@ const getRoomLists = async (
 	AND room.is_deleted = false
 	AND room.data->>'type' = $3
 	AND $2 = ANY (room.user_ids)
-	ORDER BY room_latest_msg.updated_at
+	ORDER BY room_latest_msg.updated_at DESC
 		`;
 		let params = [client_id, user_id, type];
 		let { rows }: any = await db.query(query, params);
@@ -112,16 +114,16 @@ const createRoom = async (
 	data: roomDataType
 ): Promise<anyObjectType> => {
 	try {
-		const query = `INSERT INTO room (clients_id,data, is_deleted, user_ids) VALUES ($1,$2,$3,$4) RETURNING id`;
+		const query = `INSERT INTO room (clients_id,data, is_deleted, user_ids, custom_id) VALUES ($1,$2,$3,$4,$5) RETURNING id`;
 		let message: string = "";
 		const params = [
 			client_id,
 			{ type: data.type, name: data.name },
 			false,
 			data.user_ids,
+			data.custom_id ? data.custom_id : null,
 		];
 		const result: any = await db.query(query, params);
-
 		result
 			? (message = "success add new room")
 			: (message = "failed add new room");
@@ -142,6 +144,39 @@ const getRoomTypeLists = async (clients_id: string): Promise<anyObjectType> => {
 		throw new Error(e);
 	}
 };
+const deleteRoom = async (data: deleteGroupDataType): Promise<any> => {
+	try {
+		const params = [data.clients_id];
+		let filterQuery = "";
+		let message = "";
+		/**
+		 *
+		 * room_id or custom_id need to be specified
+		 * if none of these specified it will return an failed message
+		 * when both of room_id and custom id has values it will prioritize using room_id as selector
+		 *
+		 */
+		data.room_id
+			? ((filterQuery += ` AND room.id = $2 `), params.push(data.room_id))
+			: data.custom_id
+			? ((filterQuery += ` AND room.custom_id = $2 `),
+			  params.push(data.custom_id))
+			: "";
+
+		const query = `
+		UPDATE room 
+		SET is_active = false 
+		WHERE clients_id = $1
+		${filterQuery}`;
+
+		const result: any = await db.query(query, params);
+		result.rowCount > 0
+			? (message += "room deleted")
+			: (message += "failed delete room");
+		console.log(message);
+		return { message };
+	} catch (e) {}
+};
 export default {
 	updateUserInRoom,
 	getCurrentUserInRoom,
@@ -149,4 +184,5 @@ export default {
 	getRoomById,
 	createRoom,
 	getRoomTypeLists,
+	deleteRoom,
 };
